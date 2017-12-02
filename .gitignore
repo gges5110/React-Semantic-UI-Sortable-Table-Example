@@ -4,3 +4,4 @@ static/app.bundle.js
 static/app.bundle.js.map
 static/vendor.bundle.js
 static/vendor.bundle.js.map
+package-lock.json
