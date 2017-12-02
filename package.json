@@ -8,12 +8,13 @@
     "compile-server": "babel server --presets es2015-node4 --out-dir dist --source-maps",
     "watch-server": "babel server --presets es2015-node4 --out-dir dist --source-maps --watch",
     "compile": "webpack",
-    "watch": "webpack --hot --inline",
+    "watch": "webpack --watch",
     "dev-all": "npm run watch & npm run watch-server & npm start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "express": "^4.14.0",
+    "body-parser": "^1.15.2",
     "source-map-support": "^0.4.2"
   },
   "devDependencies": {
@@ -23,9 +24,11 @@
     "babel-preset-es2015-node4": "^2.1.0",
     "babel-preset-react": "^6.11.1",
     "nodemon": "^1.12.1",
+    "prop-types": "^15.6.0",
     "react": "^15.3.1",
     "react-dom": "^15.3.1",
-    "webpack": "^1.13.2"
+    "webpack": "^1.13.2",
+    "whatwg-fetch": "^1.0.0"
   },
   "author": "Gerry Wu",
   "license": "MIT"
