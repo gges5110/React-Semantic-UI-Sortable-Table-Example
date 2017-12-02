@@ -1,19 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Table } from 'semantic-ui-react'
 
 // import VehicleTable from './VehicleTable.jsx';
 import VehicleFilter from './VehicleFilter.jsx';
 
 const VehicleRow = (props) => (
-  <tr>
-    <td>{props.vehicle.make}</td>
-    <td>{props.vehicle.model}</td>
-    <td>{props.vehicle.year}</td>
-    <td>{props.vehicle.package}</td>
-    <td>{props.vehicle.fuelType}</td>
-    <td>{props.vehicle.transmission}</td>
-    <td>{props.vehicle.favorite ? 'Y' : 'N'}</td>
-  </tr>
+  <Table.Row>
+    <Table.Cell>{props.vehicle.make}</Table.Cell>
+    <Table.Cell>{props.vehicle.model}</Table.Cell>
+    <Table.Cell>{props.vehicle.year}</Table.Cell>
+    <Table.Cell>{props.vehicle.package}</Table.Cell>
+    <Table.Cell>{props.vehicle.fuelType}</Table.Cell>
+    <Table.Cell>{props.vehicle.transmission}</Table.Cell>
+    <Table.Cell>{props.vehicle.favorite ? 'Y' : 'N'}</Table.Cell>
+  </Table.Row>
 )
 
 VehicleRow.propTypes = {
@@ -24,20 +25,23 @@ function VehicleTable(props) {
   console.log(props.vehicles);
   const vehicleRows = props.vehicles.map(vehicle => <VehicleRow key={vehicle._id} vehicle={vehicle} />)
   return (
-    <table className="bordered-table">
-      <thead>
-        <tr>
-          <th>Make</th>
-          <th>Model</th>
-          <th>Year</th>
-          <th>Package</th>
-          <th>Fuel Type</th>
-          <th>Transmission</th>
-          <th>Favorite</th>
-        </tr>
-      </thead>
-      <tbody>{vehicleRows}</tbody>
-    </table>
+    <Table celled>
+      <Table.Header>
+        <Table.Row>
+          <Table.HeaderCell>Make</Table.HeaderCell>
+          <Table.HeaderCell>Model</Table.HeaderCell>
+          <Table.HeaderCell>Year</Table.HeaderCell>
+          <Table.HeaderCell>Package</Table.HeaderCell>
+          <Table.HeaderCell>Fuel Type</Table.HeaderCell>
+          <Table.HeaderCell>Transmission</Table.HeaderCell>
+          <Table.HeaderCell>Favorite</Table.HeaderCell>
+        </Table.Row>
+      </Table.Header>
+
+      <Table.Body>
+        {vehicleRows}
+      </Table.Body>
+    </Table>
   );
 }
 
@@ -57,7 +61,13 @@ const columnNameToId = {
 export default class VehicleList extends React.Component {
   constructor() {
     super();
-    this.state = { vehicles: [], sortBy: 'Model', sortDir: 'ASC' };
+    this.state = {
+      vehicles: [],
+      sortBy: 'Model',
+      order: 'asc',
+      offset: 0,
+      limit: 100,
+     };
     this.loadData = this.loadData.bind(this);
     this.sortVehicle = this.sortVehicle.bind(this);
   }
@@ -87,7 +97,7 @@ export default class VehicleList extends React.Component {
   }
 
   loadData() {
-    fetch('/api/vehicles').then(response => {
+    fetch('/api/v1/vehicles').then(response => {
       if (response.ok) {
         response.json().then(data => {
           console.log(data);
