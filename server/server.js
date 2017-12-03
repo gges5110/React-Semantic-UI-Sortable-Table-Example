@@ -10,10 +10,10 @@ app.use(express.static('static'));
 app.use(bodyParser.json());
 
 app.get('/api/v1/vehicles', function(req, res) {
-  var sortBy = vehicleConstants.vehicleFieldTypes[0];
-  var order = vehicleConstants.orderFieldTypes[0];
-  var filter;
-  var offset = 0, limit = 100;
+  let sortBy = vehicleConstants.vehicleFieldTypes[0];
+  let order = vehicleConstants.orderFieldTypes[0];
+  let filter;
+  let offset = 0, limit = 10;
 
   if (req.query.sortBy !== undefined) {
     if (!(vehicleConstants.vehicleFieldTypes.includes(req.query.sortBy)) ) {
@@ -35,19 +35,19 @@ app.get('/api/v1/vehicles', function(req, res) {
   }
   if (req.query.filter !== undefined) {
     filter = req.query.filter;
+    filter = filter.toLowerCase();
   }
   if (req.query.offset !== undefined) {
-    offset = req.query.offset;
+    offset = parseInt(req.query.offset);
   }
   if (req.query.limit !== undefined) {
-    limit = req.query.limit;
+    limit = parseInt(req.query.limit);
   }
 
   // Filter vehiclesData
   var rows = vehiclesData.data.slice();
   var matches = [];
   if (filter !== undefined) {
-    console.log(typeof(filter));
     for (var i = 0; i < rows.length; ++i) {
       for (var j = 0; j < vehicleConstants.filterableVehicleFieldTypes.length; ++j) {
         var string = rows[i][vehicleConstants.filterableVehicleFieldTypes[j]];
@@ -55,6 +55,7 @@ app.get('/api/v1/vehicles', function(req, res) {
           string = string.toString();
         }
 
+        string = string.toLowerCase();
         if (string.includes(filter)) {
           matches.push(rows[i]);
           break;
@@ -78,7 +79,13 @@ app.get('/api/v1/vehicles', function(req, res) {
     return sortVal * sign;
   })
 
-  res.json(matches.slice(offset * limit, (offset + 1) * limit));
+  var ret = {
+    metadata: {
+      totalCount: matches.length
+    },
+    records: matches.slice(offset * limit, (offset + 1) * limit)
+  }
+  res.json(ret);
 })
 
 app.post('/api/v1/favorite', function(req, res) {
