@@ -35,6 +35,7 @@ app.get('/api/v1/vehicles', function(req, res) {
   }
   if (req.query.filter !== undefined) {
     filter = req.query.filter;
+    filter = filter.trim();
     filter = filter.toLowerCase();
   }
   if (req.query.offset !== undefined) {
