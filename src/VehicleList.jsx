@@ -1,111 +1,121 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Table } from 'semantic-ui-react'
+import { Segment, Header, Divider } from 'semantic-ui-react';
 
-// import VehicleTable from './VehicleTable.jsx';
+import VehicleTable from './VehicleTable.jsx';
 import VehicleFilter from './VehicleFilter.jsx';
+import VehicleSort from './VehicleSort.jsx';
 
-const VehicleRow = (props) => (
-  <Table.Row>
-    <Table.Cell>{props.vehicle.make}</Table.Cell>
-    <Table.Cell>{props.vehicle.model}</Table.Cell>
-    <Table.Cell>{props.vehicle.year}</Table.Cell>
-    <Table.Cell>{props.vehicle.package}</Table.Cell>
-    <Table.Cell>{props.vehicle.fuelType}</Table.Cell>
-    <Table.Cell>{props.vehicle.transmission}</Table.Cell>
-    <Table.Cell>{props.vehicle.favorite ? 'Y' : 'N'}</Table.Cell>
-  </Table.Row>
-)
-
-VehicleRow.propTypes = {
-  vehicle: PropTypes.object.isRequired,
-}
-
-function VehicleTable(props) {
-  console.log(props.vehicles);
-  const vehicleRows = props.vehicles.map(vehicle => <VehicleRow key={vehicle._id} vehicle={vehicle} />)
-  return (
-    <Table celled>
-      <Table.Header>
-        <Table.Row>
-          <Table.HeaderCell>Make</Table.HeaderCell>
-          <Table.HeaderCell>Model</Table.HeaderCell>
-          <Table.HeaderCell>Year</Table.HeaderCell>
-          <Table.HeaderCell>Package</Table.HeaderCell>
-          <Table.HeaderCell>Fuel Type</Table.HeaderCell>
-          <Table.HeaderCell>Transmission</Table.HeaderCell>
-          <Table.HeaderCell>Favorite</Table.HeaderCell>
-        </Table.Row>
-      </Table.Header>
-
-      <Table.Body>
-        {vehicleRows}
-      </Table.Body>
-    </Table>
-  );
-}
-
-VehicleTable.propTypes = {
-  vehicles: PropTypes.array.isRequired,
-}
-
-const columnNameToId = {
-  'Make': 'make',
-  'Model': 'model',
-  'Year': 'year',
-  'Package': 'package',
-  'Fuel Type': 'fuelType',
-  'Transmission': 'transmission'
-}
+const queryParams = ['limit','order','sortBy','filter','offset'];
 
 export default class VehicleList extends React.Component {
   constructor() {
     super();
     this.state = {
       vehicles: [],
-      sortBy: 'Model',
+      sortBy: '_id',
       order: 'asc',
       offset: 0,
-      limit: 100,
+      limit: 10,
+      filter: '',
+      totalCount: 0,
      };
     this.loadData = this.loadData.bind(this);
-    this.sortVehicle = this.sortVehicle.bind(this);
+    this.onChangeLimit = this.onChangeLimit.bind(this);
+    this.onChangeOrder = this.onChangeOrder.bind(this);
+    this.onChangeSort = this.onChangeSort.bind(this);
+    this.onSubmitFilter = this.onSubmitFilter.bind(this);
+    this.onChangePage = this.onChangePage.bind(this);
+    this.addFavorite = this.addFavorite.bind(this);
   }
 
   componentDidMount() {
-    this.loadData();
+    this.loadData({});
   }
 
-  sortVehicle(text) {
-    console.log(text);
-    let rows = this.state.vehicles.slice();
-    console.log(rows.length);
-    console.log('sort by: ' + columnNameToId[text]);
-    if (columnNameToId[text] !== undefined) {
-      rows.sort((a, b) => {
-        if (a[columnNameToId[text]] < b[columnNameToId[text]]) {
-          return -1;
-        } else if (a[columnNameToId[text]] > b[columnNameToId[text]]) {
-          return 1;
-        } else {
-          return a['_id'] - b['_id'];
-        }
-      })
+  onChangeLimit(event, data) {
+    if (data.value !== this.state.limit) {
+      this.setState({ limit: data.value, offset: 0  })
+      this.loadData({ limit: data.value, offset: 0  });
     }
-
-    this.setState({ sortBy: text, vehicles: rows });
   }
 
-  loadData() {
-    fetch('/api/v1/vehicles').then(response => {
+  onChangeOrder(event, data) {
+    if (data.value !== this.state.order) {
+      this.setState({ order: data.value, offset: 0  })
+      this.loadData({ order: data.value, offset: 0  });
+    }
+  }
+
+  onChangeSort(event, data) {
+    if (data.value !== this.state.sortBy) {
+      this.setState({ sortBy: data.value, offset: 0  })
+      this.loadData({ sortBy: data.value, offset: 0  });
+    }
+  }
+
+  onSubmitFilter(filter) {
+    if (filter !== this.state.filter) {
+      this.setState({ filter: filter, offset: 0 })
+      this.loadData({ filter: filter, offset: 0 });
+    }
+  }
+
+  onChangePage(page) {
+    if (page !== this.state.offset) {
+      this.setState({ offset: page })
+      this.loadData({ offset: page });
+    }
+  }
+
+  addFavorite(vehicle) {
+    fetch('/api/v1/favorite', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({'vehicle': vehicle}),
+    }).then(response => {
       if (response.ok) {
         response.json().then(data => {
-          console.log(data);
-          console.log(typeof(this.state.sortBy))
-          console.log(this.state.sortBy)
-          console.log(data);
-          this.setState({ vehicles: data });
+          var vehicles = this.state.vehicles.slice();
+          for (var i = 0; i < vehicles.length; ++i) {
+            if (vehicles[i]._id === data._id) {
+              vehicles[i] = data;
+              break;
+            }
+          }
+
+          this.setState({ vehicles: vehicles });
         })
+      } else {
+        response.json().then(error => {
+          console.log(`Failed to load data: ${error.message}`);
+        });
+      }
+    })
+  }
+
+  loadData(params) {
+    const current = this.state;
+    queryParams.forEach(function(element) {
+      if (!(element in params)) {
+        params[element] = current[element];
+      }
+    });
+
+    const esc = encodeURIComponent;
+    const query = Object.keys(params)
+        .map(k => esc(k) + '=' + esc(params[k]))
+        .join('&');
+    console.log('Load data with query: ' + query);
+    fetch('/api/v1/vehicles?' + query).then(response => {
+      if (response.ok) {
+        response.json().then(data => {
+          this.setState({ vehicles: data.records, totalCount: data.metadata.totalCount });
+        })
+      } else {
+        response.json().then(error => {
+          console.log(`Failed to load data: ${error.message}`);
+        });
       }
     })
   }
@@ -113,13 +123,37 @@ export default class VehicleList extends React.Component {
   render() {
     return (
       <div>
-        <VehicleFilter
-          sortBy={ this.state.sortBy }
-          sortDir={ this.state.sortDir }
-          sortVehicle={ this.sortVehicle }
-        />
-        <hr />
-        <VehicleTable vehicles={ this.state.vehicles } />
+
+          <Segment>
+            <Header size='medium'>Sort Options</Header>
+            <VehicleSort
+              onChangeLimit = { this.onChangeLimit }
+              onChangeOrder = { this.onChangeOrder }
+              onChangeSort = { this.onChangeSort }
+              sortBy = { this.state.sortBy }
+              order = { this.state.order }
+              limit = { this.state.limit.toString() }
+            />
+            <Divider />
+            <VehicleFilter
+              filter = { this.state.filter }
+              totalCount = {this.state.totalCount }
+              onSubmitFilter = { this.onSubmitFilter }
+            />
+          </Segment>
+
+
+        <Segment>
+          <Header size='medium'>Vehicle Table</Header>
+          <VehicleTable
+            vehicles = { this.state.vehicles }
+            totalCount = {this.state.totalCount }
+            totalPages = { Math.ceil(this.state.totalCount / this.state.limit) }
+            currentPage = { this.state.offset }
+            onChangePage = { this.onChangePage }
+            addFavorite = { this.addFavorite }
+          />
+        </Segment>
       </div>
     )
   }
