@@ -11,19 +11,27 @@ npm install
 to install the dependencies.
 
 ## Compile and run
+To compile the React component once, type
 ```
-npm run watch
+npm run compile
 ```
 This command will build app.bundle.js, vendor.bundle.js and their corresponding source maps.
 I compile it separately into two files, app.bundle.js is for our react front end code and vendor.bundle.js is for the other front end libraries. Find out more in the ```webpack.config.js```.
 
+To watch the changes related to front end and compile automatically, use
+```
+npm run watch
+```
 
+To start the server and watch any changes that's being made to ```server/server.js```, type
 ```
 npm start
 ```
-This will start the server and watch any changes that's being made to ```server/server.js```. The default port is 3000. Open the browser and go to localhost:3000
+ The default port is 3000. Open the browser and go to localhost:3000
 
-## Deploy
+All of the above commands can be found in the scripts section of ```package.json```.
+
+## Deployment
 To deploy the application, there is no need to include the React JS files under the ```/src``` folder. Just include ```index.html```, ```app.bundle.js``` and ```vendor.bundle.js``` and the files in ```/server```. To install the dependencies for deployment, run ```npm install --production```.
 
 
