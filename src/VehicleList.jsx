@@ -106,7 +106,6 @@ export default class VehicleList extends React.Component {
     const query = Object.keys(params)
         .map(k => esc(k) + '=' + esc(params[k]))
         .join('&');
-    console.log('Load data with query: ' + query);
     fetch('/api/v1/vehicles?' + query).then(response => {
       if (response.ok) {
         response.json().then(data => {
