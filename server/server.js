@@ -33,16 +33,31 @@ app.get('/api/v1/vehicles', function(req, res) {
     }
     order = req.query.order;
   }
+
+  const regex = new RegExp("^[a-zA-Z0-9]+$");
   if (req.query.filter !== undefined) {
     filter = req.query.filter;
     filter = filter.trim();
     filter = filter.toLowerCase();
+    console.log(filter);
+    if (filter !== '' && !regex.test(filter)) {
+      res.status(422).json({
+        message: `Invalid filter: ${filter}`
+      });
+      return;
+    }
   }
   if (req.query.offset !== undefined) {
     offset = parseInt(req.query.offset);
+    if (offset < 0) {
+      offset = 0;
+    }
   }
   if (req.query.limit !== undefined) {
     limit = parseInt(req.query.limit);
+    if (limit > 100 || limit < 0) {
+      limit = 100;
+    }
   }
 
   // Filter vehiclesData
