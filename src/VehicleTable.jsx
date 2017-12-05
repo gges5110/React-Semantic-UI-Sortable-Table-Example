@@ -39,6 +39,7 @@ class VehicleRow extends React.Component {
 
 VehicleRow.propTypes = {
   vehicle: PropTypes.object.isRequired,
+  addFavorite: PropTypes.func.isRequired,
 }
 
 export default function VehicleTable(props) {
@@ -78,5 +79,9 @@ export default function VehicleTable(props) {
 
 VehicleTable.propTypes = {
   vehicles: PropTypes.array.isRequired,
+  totalCount: PropTypes.number.isRequired,
+  totalPages: PropTypes.number.isRequired,
+  currentPage: PropTypes.number.isRequired,
   onChangePage: PropTypes.func.isRequired,
+  addFavorite: PropTypes.func.isRequired,
 }

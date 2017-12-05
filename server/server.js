@@ -37,9 +37,7 @@ app.get('/api/v1/vehicles', function(req, res) {
   const regex = new RegExp("^[a-zA-Z0-9]+$");
   if (req.query.filter !== undefined) {
     filter = req.query.filter;
-    filter = filter.trim();
-    filter = filter.toLowerCase();
-    console.log(filter);
+    filter = filter.trim().toLowerCase();
     if (filter !== '' && !regex.test(filter)) {
       res.status(422).json({
         message: `Invalid filter: ${filter}`

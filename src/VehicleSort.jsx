@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Form, Dropdown } from 'semantic-ui-react';
 import VehicleDropdownOptions from './VehicleDropdownOptions.jsx';
 
@@ -39,5 +40,13 @@ const VehicleSort = (props) => (
   </Form>
 )
 
+VehicleSort.propTypes = {
+  onChangeLimit: PropTypes.func.isRequired,
+  onChangeOrder: PropTypes.func.isRequired,
+  onChangeSort: PropTypes.func.isRequired,
+  sortBy: PropTypes.string.isRequired,
+  order: PropTypes.string.isRequired,
+  limit: PropTypes.string.isRequired,
+}
 
 export default  VehicleSort
