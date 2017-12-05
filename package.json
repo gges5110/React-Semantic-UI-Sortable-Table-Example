@@ -5,8 +5,6 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon -w server server/server.js",
-    "compile-server": "babel server --presets es2015-node4 --out-dir dist --source-maps",
-    "watch-server": "babel server --presets es2015-node4 --out-dir dist --source-maps --watch",
     "compile": "webpack",
     "watch": "webpack --watch",
     "dev-all": "npm run watch & npm run watch-server & npm start",
