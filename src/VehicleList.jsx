@@ -123,25 +123,23 @@ export default class VehicleList extends React.Component {
   render() {
     return (
       <div>
-
-          <Segment>
-            <Header size='medium'>Sort Options</Header>
-            <VehicleSort
-              onChangeLimit = { this.onChangeLimit }
-              onChangeOrder = { this.onChangeOrder }
-              onChangeSort = { this.onChangeSort }
-              sortBy = { this.state.sortBy }
-              order = { this.state.order }
-              limit = { this.state.limit.toString() }
-            />
-            <Divider />
-            <VehicleFilter
-              filter = { this.state.filter }
-              totalCount = {this.state.totalCount }
-              onSubmitFilter = { this.onSubmitFilter }
-            />
-          </Segment>
-
+        <Segment>
+          <Header size='medium'>Sort Options</Header>
+          <VehicleSort
+            onChangeLimit = { this.onChangeLimit }
+            onChangeOrder = { this.onChangeOrder }
+            onChangeSort = { this.onChangeSort }
+            sortBy = { this.state.sortBy }
+            order = { this.state.order }
+            limit = { this.state.limit.toString() }
+          />
+          <Divider />
+          <VehicleFilter
+            filter = { this.state.filter }
+            totalCount = {this.state.totalCount }
+            onSubmitFilter = { this.onSubmitFilter }
+          />
+        </Segment>
 
         <Segment>
           <Header size='medium'>Vehicle Table</Header>
