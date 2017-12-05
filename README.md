@@ -35,8 +35,7 @@ To deploy the application, there is no need to include the React JS files under 
 | Toggle Favorite   | Post          | /api/v1/favorite  | Requires to send the JSON formatted vehicle in the body. Will send back an error status if no vehicle is found in the body of request.  |
 
 ## Sorting data on front-end v.s. back-end
-Depending on the data set size and the connectivity, we can sort the vehicle data either on front-end or the back-end. When the data set size is small it is easier to send the whole data set to the client size and do all the sorting and filtering in the browser. But this will not scale well as the data size grows, especially it could have millons of rows. To limit the data being sent over to the front-end, I only allow 100 records per request. To achieve this I also implemented table pagination.
+Depending on the data set size and the connectivity, we can sort the vehicle data either on front-end or the back-end. When the data set size is small it is easier to send the whole data set to the client size and do all the sorting and filtering in the browser. But this will not scale well as the data size grows, especially it could have millons of rows. To limit the data being sent over to the front-end, I only allow 100 records per request.
 
-Each time a character changes in
-
-Front end UI library
+## Input Validation
+Each time a character changes in filter input, it will check two things. 1) If the input contains invalid character, and 2) there is no result being found after applying the filter. For the first case, the input UI will turn red and a popup will show a message warning the user. If the filter will cause the result to be empty, the popup will inform the user about this. On the server side, it will also check if the input only contains alphanumerics, and will send a 422 response along with an error message.
