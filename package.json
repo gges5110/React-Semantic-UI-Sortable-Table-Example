@@ -7,6 +7,7 @@
     "start": "nodemon -w server server/server.js",
     "compile": "webpack",
     "watch": "webpack --watch",
+    "postinstall": "webpack",
     "dev-all": "npm run watch & npm run watch-server & npm start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
