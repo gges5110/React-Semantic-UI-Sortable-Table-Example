@@ -122,6 +122,6 @@ app.post('/api/v1/favorite', function(req, res) {
   }
 })
 
-app.listen(3000, function () {
+app.listen(process.env.PORT || 3000, function () {
   console.log('App started on port 3000');
 });
