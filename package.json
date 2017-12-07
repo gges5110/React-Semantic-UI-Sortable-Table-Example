@@ -2,6 +2,9 @@
   "name": "cirrus-logic-coding-challenge",
   "version": "1.0.0",
   "description": "",
+  "engines" : {
+    "node" : ">=6.7.0"
+  },
   "main": "index.js",
   "scripts": {
     "start": "nodemon -w server server/server.js",
