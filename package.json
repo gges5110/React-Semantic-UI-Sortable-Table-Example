@@ -10,14 +10,15 @@
     "start": "nodemon -w server server/server.js",
     "compile": "webpack",
     "watch": "webpack --watch",
-    "postinstall": "webpack",
+    "heroku-postbuild": "webpack --progress",
     "dev-all": "npm run watch & npm run watch-server & npm start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "express": "^4.14.0",
     "body-parser": "^1.15.2",
-    "source-map-support": "^0.4.2"
+    "source-map-support": "^0.4.2",
+    "webpack": "^1.13.2"
   },
   "devDependencies": {
     "babel-cli": "^6.11.4",
@@ -30,7 +31,6 @@
     "react": "^15.3.1",
     "react-dom": "^15.3.1",
     "semantic-ui-react": "^0.77.0",
-    "webpack": "^1.13.2",
     "whatwg-fetch": "^1.0.0"
   },
   "author": "Gerry Wu",
