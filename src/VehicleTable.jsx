@@ -29,7 +29,7 @@ class VehicleRow extends React.Component {
           <Table.Cell textAlign='center'>
             <Button
               onClick={this.addToFavorite}
-              color={this.props.vehicle.favorite? 'google plus' : 'teal'}
+              color={this.props.vehicle.favorite? 'google plus' : 'twitter'}
               icon={this.props.vehicle.favorite ? 'heart' : 'heart outline'} />
           </Table.Cell>
         </Table.Row>

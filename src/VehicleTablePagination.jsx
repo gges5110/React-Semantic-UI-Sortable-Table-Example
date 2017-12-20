@@ -78,7 +78,7 @@ export default class VehicleTablePagination extends React.Component {
       <Table.Row>
         <Table.HeaderCell colSpan='8'>
           Total pages: {this.props.totalPages}
-          <Menu floated='right' pagination>
+          <Menu floated='right' pagination borderless>
             <Menu.Item
                 as='a'
                 icon
