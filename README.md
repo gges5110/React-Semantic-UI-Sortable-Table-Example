@@ -1,4 +1,4 @@
-# CirrusLogicCodingChallenge
+# React-Semantic-UI-Sortable-Table-Example
 
 ## Prerequisite
 Node.js runtime environment.
