@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form, Popup, Button } from 'semantic-ui-react';
+import { Form, Popup, Button, Loader } from 'semantic-ui-react';
 
 const regex = new RegExp("^[a-zA-Z0-9 ]+$");
 
@@ -45,13 +45,13 @@ export default class VehicleFilter extends React.Component {
                 label='Filter'
                 onChange={this.handleOnChange}
                 icon='search'
+                loading={this.props.loading}
               />}
               content={popupMessage}
               on='click'
               open={!this.state.filterValid || this.props.totalCount === 0}
               position='right center'
             />
-
           </Form.Field>
         </Form.Group>
       </Form>

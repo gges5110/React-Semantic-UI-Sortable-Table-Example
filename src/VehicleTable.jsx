@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Table, Checkbox, Icon } from 'semantic-ui-react'
+import { Button, Table, Checkbox, Icon, Dropdown } from 'semantic-ui-react'
 
+import VehicleDropdownOptions from './VehicleDropdownOptions.jsx';
 import VehicleTablePagination from './VehicleTablePagination.jsx';
 
 class VehicleRow extends React.Component {
@@ -46,8 +47,11 @@ export default function VehicleTable(props) {
   const vehicleRows = props.vehicles.map(vehicle => <VehicleRow key={vehicle._id} vehicle={vehicle} addFavorite={props.addFavorite} />)
   return (
     <div>
-      Total count: {props.totalCount}
-      <Table celled selectable sortable>
+      Records per page:
+      {' '}
+      <Dropdown inline options={VehicleDropdownOptions.limitOptions} defaultValue={props.limit} onChange={props.onChangeLimit} />
+      Total count: {props.totalCount}.
+      <Table celled selectable sortable >
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell width={1} sorted = {props.column === '_id' ? props.direction : null } onClick={() => props.handleSort('_id')}>#</Table.HeaderCell>
@@ -84,4 +88,6 @@ VehicleTable.propTypes = {
   currentPage: PropTypes.number.isRequired,
   onChangePage: PropTypes.func.isRequired,
   addFavorite: PropTypes.func.isRequired,
+  onChangeLimit: PropTypes.func.isRequired,
+  limit: PropTypes.string.isRequired,
 }

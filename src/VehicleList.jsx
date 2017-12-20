@@ -4,7 +4,6 @@ import { Segment, Header, Divider } from 'semantic-ui-react';
 
 import VehicleTable from './VehicleTable.jsx';
 import VehicleFilter from './VehicleFilter.jsx';
-import VehicleSort from './VehicleSort.jsx';
 
 const queryParams = ['limit','order','sortBy','filter','offset'];
 
@@ -19,6 +18,7 @@ export default class VehicleList extends React.Component {
       filter: '',
       totalCount: 0,
       direction: null,
+      loading: false,
      };
     this.loadData = this.loadData.bind(this);
     this.onChangeLimit = this.onChangeLimit.bind(this);
@@ -72,7 +72,7 @@ export default class VehicleList extends React.Component {
 
   onSubmitFilter(filter) {
     if (filter !== this.state.filter) {
-      this.setState({ filter: filter, offset: 0 })
+      this.setState({ filter: filter, offset: 0, loading: true })
       this.loadData({ filter: filter, offset: 0 });
     }
   }
@@ -132,6 +132,7 @@ export default class VehicleList extends React.Component {
           console.log(`Failed to load data: ${error.message}`);
         });
       }
+      this.setState({loading: false});
     })
   }
 
@@ -139,21 +140,13 @@ export default class VehicleList extends React.Component {
     return (
       <div>
         <Segment>
-          <Header size='medium'>Sort Options</Header>
-          <VehicleSort
-            onChangeLimit = { this.onChangeLimit }
-            limit = { this.state.limit.toString() }
-          />
-          <Divider />
           <VehicleFilter
             filter = { this.state.filter }
             totalCount = {this.state.totalCount }
             onSubmitFilter = { this.onSubmitFilter }
+            loading = { this.state.loading }
           />
-        </Segment>
-
-        <Segment>
-          <Header size='medium'>Vehicle Table</Header>
+        <Divider/>
           <VehicleTable
             vehicles = { this.state.vehicles }
             totalCount = {this.state.totalCount }
@@ -164,6 +157,8 @@ export default class VehicleList extends React.Component {
             column = { this.state.sortBy }
             direction = { this.state.direction }
             handleSort = { this.handleSort }
+            onChangeLimit = { this.onChangeLimit }
+            limit = { this.state.limit.toString() }
           />
         </Segment>
       </div>
