@@ -14,19 +14,49 @@ export default class VehicleList extends React.Component {
     this.state = {
       vehicles: [],
       sortBy: '_id',
-      order: 'asc',
       offset: 0,
       limit: 10,
       filter: '',
       totalCount: 0,
+      direction: null,
      };
     this.loadData = this.loadData.bind(this);
     this.onChangeLimit = this.onChangeLimit.bind(this);
-    this.onChangeOrder = this.onChangeOrder.bind(this);
-    this.onChangeSort = this.onChangeSort.bind(this);
     this.onSubmitFilter = this.onSubmitFilter.bind(this);
     this.onChangePage = this.onChangePage.bind(this);
     this.addFavorite = this.addFavorite.bind(this);
+    this.handleSort = this.handleSort.bind(this);
+  }
+
+  handleSort(clickedColumn) {
+    const { sortBy, direction } = this.state
+
+    if (sortBy !== clickedColumn) {
+      this.setState({
+        sortBy: clickedColumn,
+        direction: 'ascending',
+      })
+
+      this.loadData({
+        sortBy: clickedColumn,
+        offset: 0,
+        order: 'ascending',
+      });
+
+      return
+    }
+
+    this.setState({
+      sortBy: clickedColumn,
+      offset: 0,
+      direction: direction === 'ascending' ? 'descending' : 'ascending',
+    })
+
+    this.loadData({
+      sortBy: clickedColumn,
+      offset: 0,
+      order: direction === 'ascending' ? 'descending' : 'ascending'
+    });
   }
 
   componentDidMount() {
@@ -37,20 +67,6 @@ export default class VehicleList extends React.Component {
     if (data.value !== this.state.limit) {
       this.setState({ limit: data.value, offset: 0  })
       this.loadData({ limit: data.value, offset: 0  });
-    }
-  }
-
-  onChangeOrder(event, data) {
-    if (data.value !== this.state.order) {
-      this.setState({ order: data.value, offset: 0  })
-      this.loadData({ order: data.value, offset: 0  });
-    }
-  }
-
-  onChangeSort(event, data) {
-    if (data.value !== this.state.sortBy) {
-      this.setState({ sortBy: data.value, offset: 0  })
-      this.loadData({ sortBy: data.value, offset: 0  });
     }
   }
 
@@ -126,10 +142,6 @@ export default class VehicleList extends React.Component {
           <Header size='medium'>Sort Options</Header>
           <VehicleSort
             onChangeLimit = { this.onChangeLimit }
-            onChangeOrder = { this.onChangeOrder }
-            onChangeSort = { this.onChangeSort }
-            sortBy = { this.state.sortBy }
-            order = { this.state.order }
             limit = { this.state.limit.toString() }
           />
           <Divider />
@@ -149,6 +161,9 @@ export default class VehicleList extends React.Component {
             currentPage = { this.state.offset }
             onChangePage = { this.onChangePage }
             addFavorite = { this.addFavorite }
+            column = { this.state.sortBy }
+            direction = { this.state.direction }
+            handleSort = { this.handleSort }
           />
         </Segment>
       </div>

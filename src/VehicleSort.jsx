@@ -7,26 +7,6 @@ const VehicleSort = (props) => (
   <Form>
     <Form.Group widths='equal'>
       <Form.Field>
-        <label>Sort By</label>
-        <Dropdown
-          options={VehicleDropdownOptions.sortOptions}
-          selection
-          fluid
-          value={props.sortBy}
-          onChange={props.onChangeSort}
-        />
-      </Form.Field>
-      <Form.Field>
-        <label>Order</label>
-        <Dropdown
-          options={VehicleDropdownOptions.orderOptions}
-          selection
-          fluid
-          value={props.order}
-          onChange={props.onChangeOrder}
-        />
-      </Form.Field>
-      <Form.Field>
         <label>Records Per Page</label>
         <Dropdown
           options={VehicleDropdownOptions.limitOptions}
@@ -42,11 +22,7 @@ const VehicleSort = (props) => (
 
 VehicleSort.propTypes = {
   onChangeLimit: PropTypes.func.isRequired,
-  onChangeOrder: PropTypes.func.isRequired,
-  onChangeSort: PropTypes.func.isRequired,
-  sortBy: PropTypes.string.isRequired,
-  order: PropTypes.string.isRequired,
   limit: PropTypes.string.isRequired,
 }
 
-export default  VehicleSort
+export default VehicleSort

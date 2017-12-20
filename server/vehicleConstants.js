@@ -19,8 +19,8 @@ const filterableVehicleFieldTypes = [
 ];
 
 const orderFieldTypes = [
-  'asc',
-  'desc'
+  'ascending',
+  'descending'
 ];
 
 module.exports = {

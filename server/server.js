@@ -26,12 +26,10 @@ app.get('/api/v1/vehicles', function(req, res) {
   }
   if (req.query.order !== undefined) {
     if (!(vehicleConstants.orderFieldTypes.includes(req.query.order))) {
-      res.status(422).json({
-        message: 'Invalid requested sort order. Allowed sort orders are ' + vehicleConstants.orderFieldTypes.join(", ")
-      });
-      return;
+      order = vehicleConstants.orderFieldTypes[0];
+    } else {
+      order = req.query.order;
     }
-    order = req.query.order;
   }
 
   const regex = new RegExp("^[a-zA-Z0-9]+$");

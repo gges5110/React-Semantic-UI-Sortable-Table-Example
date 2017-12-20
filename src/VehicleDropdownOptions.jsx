@@ -5,24 +5,6 @@ const limitOptions = [
   {key: '3', value: '100', text: '100'},
 ]
 
-const sortOptions = [
-  {key: '_id', value: '_id', text: 'ID'},
-  {key: 'make', value: 'make', text: 'Make'},
-  {key: 'model', value: 'model', text: 'Model'},
-  {key: 'year', value: 'year', text: 'Year'},
-  {key: 'package', value: 'package', text: 'Package'},
-  {key: 'fuelType', value: 'fuelType', text: 'Fuel Type'},
-  {key: 'transmission', value: 'transmission', text: 'Transmission'},
-  {key: 'favorite', value: 'favorite', text: 'Favorite'},
-];
-
-const orderOptions = [
-  {key: 'asc', value: 'asc', text: 'Ascending'},
-  {key: 'desc', value: 'desc', text: 'Descending'},
-]
-
 export default {
   limitOptions,
-  sortOptions,
-  orderOptions
 }

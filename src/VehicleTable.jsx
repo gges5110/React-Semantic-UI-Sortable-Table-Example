@@ -47,17 +47,17 @@ export default function VehicleTable(props) {
   return (
     <div>
       Total count: {props.totalCount}
-      <Table celled selectable>
+      <Table celled selectable sortable>
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell width={1}>#</Table.HeaderCell>
-            <Table.HeaderCell width={3}>Make</Table.HeaderCell>
-            <Table.HeaderCell width={3}>Model</Table.HeaderCell>
-            <Table.HeaderCell width={1}>Year</Table.HeaderCell>
-            <Table.HeaderCell width={1}>Package</Table.HeaderCell>
-            <Table.HeaderCell width={1}>Fuel Type</Table.HeaderCell>
-            <Table.HeaderCell width={1}>Transmission</Table.HeaderCell>
-            <Table.HeaderCell width={1} >Favorite</Table.HeaderCell>
+            <Table.HeaderCell width={1} sorted = {props.column === '_id' ? props.direction : null } onClick={() => props.handleSort('_id')}>#</Table.HeaderCell>
+            <Table.HeaderCell width={3} sorted = {props.column === 'make' ? props.direction : null } onClick={() => props.handleSort('make')}>Make</Table.HeaderCell>
+            <Table.HeaderCell width={3} sorted = {props.column === 'model' ? props.direction : null } onClick={() => props.handleSort('model')}>Model</Table.HeaderCell>
+            <Table.HeaderCell width={1} sorted = {props.column === 'year' ? props.direction : null } onClick={() => props.handleSort('year')}>Year</Table.HeaderCell>
+            <Table.HeaderCell width={1} sorted = {props.column === 'package' ? props.direction : null } onClick={() => props.handleSort('package')}>Package</Table.HeaderCell>
+            <Table.HeaderCell width={1} sorted = {props.column === 'fuelType' ? props.direction : null } onClick={() => props.handleSort('fuelType')}>Fuel Type</Table.HeaderCell>
+            <Table.HeaderCell width={1} sorted = {props.column === 'trasmission' ? props.direction : null } onClick={() => props.handleSort('transmission')}>Transmission</Table.HeaderCell>
+            <Table.HeaderCell width={1} sorted = {props.column === 'favorite' ? props.direction : null } onClick={() => props.handleSort('favorite')}>Favorite</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
 
