@@ -13,7 +13,7 @@ app.get('/api/v1/vehicles', function(req, res) {
   let sortBy = vehicleConstants.vehicleFieldTypes[0];
   let order = vehicleConstants.orderFieldTypes[0];
   let filter;
-  let offset = 0, limit = 10;
+  let offset = vehicleConstants.defaultOffset, limit = vehicleConstants.defaultLimit;
 
   if (req.query.sortBy !== undefined) {
     if (!(vehicleConstants.vehicleFieldTypes.includes(req.query.sortBy)) ) {
@@ -122,9 +122,12 @@ app.post('/api/v1/favorite', function(req, res) {
 
 const port = process.env.PORT || 3000;
 
-app.listen(port, function () {
-  console.log(`App started on port ${port}`);
-});
+// https://stackoverflow.com/a/32878895/4816922
+if(!module.parent) {
+  app.listen(port, function () {
+    console.log(`App started on port ${port}`);
+  });
+}
 
 module.exports = {
   app,

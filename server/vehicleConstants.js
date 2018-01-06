@@ -23,8 +23,13 @@ const orderFieldTypes = [
   'descending'
 ];
 
+const defaultLimit = 10;
+const defaultOffset = 0;
+
 module.exports = {
   vehicleFieldTypes,
   filterableVehicleFieldTypes,
-  orderFieldTypes
+  orderFieldTypes,
+  defaultLimit,
+  defaultOffset,
 }
