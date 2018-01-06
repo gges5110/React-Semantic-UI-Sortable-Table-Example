@@ -1,7 +1,8 @@
 # React-Semantic-UI-Sortable-Table-Example
 An example for React Semantic UI sortable table.
 
-[![build status](https://img.shields.io/travis/gges5110/React-Semantic-UI-Sortable-Table-Example/master.svg?style=flat-square)](https://travis-ci.org/gges5110/React-Semantic-UI-Sortable-Table-Example)
+[![build status](https://img.shields.io/travis/gges5110/React-Semantic-UI-Sortable-Table-Example/master.svg)](https://travis-ci.org/gges5110/React-Semantic-UI-Sortable-Table-Example)
+[![Coverage Status](https://coveralls.io/repos/github/gges5110/React-Semantic-UI-Sortable-Table-Example/badge.svg?branch=master)](https://coveralls.io/github/gges5110/React-Semantic-UI-Sortable-Table-Example?branch=master)
 
 ## Prerequisite
 Node.js runtime environment.
