@@ -20,7 +20,9 @@ describe('Basic route testing', () => {
       done();
     });
   });
+});
 
+describe('/api/v1/vehicles', () => {
   it('it should GET the default vehicles', done => {
     agent
     .get('/api/v1/vehicles')
@@ -61,9 +63,68 @@ describe('Basic route testing', () => {
       res.body.records.forEach(record => {
         record.year.should.equal(1990);
       });
-      // res.body.metadata.totalCount.should.equal(vehiclesData.data.length);
-      // res.body.records.should.have.lengthOf(vehicleConstants.defaultLimit);
       done();
     });
-  })
+  });
+});
+
+describe('/api/v1/favorite', () => {
+  it('it should not be able to add a vehicle to favorite without passing vehicle object', (done) => {
+    agent
+    .post('/api/v1/favorite')
+    .end((err, res) => {
+      res.should.have.status(422);
+      res.body.should.have.property('message').which.is.a('string');
+      res.body.message.should.equal('Invalid request.');
+      done();
+    });
+  });
+
+  it('it should not be able to add a vehicle to favorite with invalid vehicle id', (done) => {
+    agent
+    .post('/api/v1/favorite')
+    .send({
+      vehicle: {
+        _id: 'someInvalidVehicleID'
+      }
+    })
+    .end((err, res) => {
+      res.should.have.status(422);
+      res.body.should.have.property('message').which.is.a('string');
+      res.body.message.should.equal('Invalid requested vehicle id.');
+      done();
+    });
+  });
+
+  it('it should be able to add a vehicle to favorite', (done) => {
+    agent
+    .post('/api/v1/favorite')
+    .send({
+      vehicle: vehiclesData.data[0]
+    })
+    .end((err, res) => {
+      res.should.have.status(200);
+      res.body.should.have.property('_id').which.is.a('number');
+      res.body.should.have.property('favorite').which.is.a('boolean');
+      res.body._id.should.equal(vehiclesData.data[0]._id);
+      res.body.favorite.should.equal(true);
+      done();
+    });
+  });
+
+  it('it should be able to toggle back a vehicle from favorite', (done) => {
+    agent
+    .post('/api/v1/favorite')
+    .send({
+      vehicle: vehiclesData.data[0]
+    })
+    .end((err, res) => {
+      res.should.have.status(200);
+      res.body.should.have.property('_id').which.is.a('number');
+      res.body.should.have.property('favorite').which.is.a('boolean');
+      res.body._id.should.equal(vehiclesData.data[0]._id);
+      res.body.favorite.should.equal(false);
+      done();
+    });
+  });
 });
