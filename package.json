@@ -14,7 +14,7 @@
     "dev-all": "npm run watch & npm run watch-server & npm start",
     "test": "mocha --timeout 10000 --exit --check-leaks",
     "cover": "istanbul cover ./node_modules/mocha/bin/_mocha -- -R spec --exit",
-    "coverall": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec --exit && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
+    "coveralls": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec --exit && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
   },
   "dependencies": {
     "express": "^4.14.0",
