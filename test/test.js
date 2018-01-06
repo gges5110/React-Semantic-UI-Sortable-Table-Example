@@ -51,6 +51,85 @@ describe('/api/v1/vehicles', () => {
     });
   });
 
+  it('it should GET the vehicles with various limits', done => {
+    agent
+    .get('/api/v1/vehicles' + '?limit=120')
+    .end((err, res) => {
+      res.should.have.status(200);
+      res.body.should.have.property('metadata');
+      res.body.should.have.property('records').which.is.an('array');
+      res.body.metadata.should.have.property('totalCount').which.is.a('number');
+      res.body.metadata.totalCount.should.equal(vehiclesData.data.length);
+      res.body.records.should.have.lengthOf(100);
+      done();
+    });
+  });
+
+  it('it should GET the vehicles with various limits', done => {
+    agent
+    .get('/api/v1/vehicles' + '?limit=-1')
+    .end((err, res) => {
+      res.should.have.status(200);
+      res.body.should.have.property('metadata');
+      res.body.should.have.property('records').which.is.an('array');
+      res.body.metadata.should.have.property('totalCount').which.is.a('number');
+      res.body.metadata.totalCount.should.equal(vehiclesData.data.length);
+      res.body.records.should.have.lengthOf(vehicleConstants.defaultLimit);
+      done();
+    });
+  });
+
+  it('it should GET the vehicles with various offsets', done => {
+    agent
+    .get('/api/v1/vehicles' + '?offset=0')
+    .end((err, res) => {
+      res.should.have.status(200);
+      res.body.should.have.property('metadata');
+      res.body.should.have.property('records').which.is.an('array');
+      res.body.metadata.should.have.property('totalCount').which.is.a('number');
+      res.body.metadata.totalCount.should.equal(vehiclesData.data.length);
+      res.body.records.should.have.lengthOf(vehicleConstants.defaultLimit);
+      done();
+    });
+  });
+
+  it('it should GET the vehicles with various offsets', done => {
+    agent
+    .get('/api/v1/vehicles' + '?offset=-1')
+    .end((err, res) => {
+      res.should.have.status(200);
+      res.body.should.have.property('metadata');
+      res.body.should.have.property('records').which.is.an('array');
+      res.body.metadata.should.have.property('totalCount').which.is.a('number');
+      res.body.metadata.totalCount.should.equal(vehiclesData.data.length);
+      res.body.records.should.have.lengthOf(vehicleConstants.defaultLimit);
+
+      for (var i = 0; i < vehicleConstants.defaultLimit; ++i) {
+        res.body.records[i]._id.should.equal(vehiclesData.data[vehicleConstants.defaultOffset * vehicleConstants.defaultLimit + i]._id);
+      }
+      done();
+    });
+  });
+
+  it('it should GET the vehicles with various offsets', done => {
+    let offset = 5;
+    agent
+    .get('/api/v1/vehicles' + '?offset=' + offset)
+    .end((err, res) => {
+      res.should.have.status(200);
+      res.body.should.have.property('metadata');
+      res.body.should.have.property('records').which.is.an('array');
+      res.body.metadata.should.have.property('totalCount').which.is.a('number');
+      res.body.metadata.totalCount.should.equal(vehiclesData.data.length);
+      res.body.records.should.have.lengthOf(vehicleConstants.defaultLimit);
+
+      for (var i = 0; i < vehicleConstants.defaultLimit; ++i) {
+        res.body.records[i]._id.should.equal(vehiclesData.data[offset * vehicleConstants.defaultLimit + i]._id);
+      }
+      done();
+    });
+  });
+
   it('it should take different filters', done => {
     agent
     .get('/api/v1/vehicles' + '?filter=1990')
@@ -63,6 +142,17 @@ describe('/api/v1/vehicles', () => {
       res.body.records.forEach(record => {
         record.year.should.equal(1990);
       });
+      done();
+    });
+  });
+
+  it('it should not take invalid characters for filter', done => {
+    agent
+    .get('/api/v1/vehicles' + '?filter=$')
+    .end((err, res) => {
+      res.should.have.status(422);
+      res.body.should.have.property('message').which.is.a('string');
+      res.body.message.should.equal('Invalid filter: $');
       done();
     });
   });
