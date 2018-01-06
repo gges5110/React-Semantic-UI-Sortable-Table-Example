@@ -13,7 +13,8 @@
     "heroku-postbuild": "npm install --dev && webpack --progress",
     "dev-all": "npm run watch & npm run watch-server & npm start",
     "test": "mocha --timeout 10000 --exit --check-leaks",
-    "cover": "istanbul cover node_modules\\mocha\\bin\\_mocha -- -R spec --exit"
+    "cover": "istanbul cover ./node_modules/mocha/bin/_mocha -- -R spec --exit",
+    "coverall": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec --exit && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
   },
   "dependencies": {
     "express": "^4.14.0",
@@ -28,6 +29,7 @@
     "babel-preset-react": "^6.11.1",
     "chai": "^4.1.2",
     "chai-http": "^3.0.0",
+    "coveralls": "^3.0.0",
     "istanbul": "^0.4.5",
     "mocha": "^4.1.0",
     "nodemon": "^1.12.1",
