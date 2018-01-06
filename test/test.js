@@ -66,6 +66,62 @@ describe('/api/v1/vehicles', () => {
       done();
     });
   });
+
+  it('it should not be able to sort with invalid column', done => {
+    agent
+    .get('/api/v1/vehicles' + '?sortBy=invalidColumn')
+    .end((err, res) => {
+      res.should.have.status(422);
+      res.body.should.have.property('message').which.is.a('string');
+      res.body.message.should.equal('Invalid requested sort id. Allowed ids are _id, make, model, year, package, fuelType, transmission, favorite');
+      done();
+    });
+  });
+
+  it('it should be able to sort by year', done => {
+    agent
+    .get('/api/v1/vehicles' + '?sortBy=year')
+    .end((err, res) => {
+      res.should.have.status(200);
+      res.body.should.have.property('records').which.is.an('array');
+      res.body.metadata.should.have.property('totalCount').which.is.a('number');
+
+      for (var i = 0; i < res.body.records.length - 1; ++i) {
+        res.body.records[i + 1].year.should.be.least(res.body.records[i].year);
+      }
+      done();
+    });
+  });
+
+  it('it should still be able to order with an invalid key', done => {
+    agent
+    .get('/api/v1/vehicles' + '?order=invalidKey')
+    .end((err, res) => {
+      res.should.have.status(200);
+      res.body.should.have.property('records').which.is.an('array');
+      res.body.metadata.should.have.property('totalCount').which.is.a('number');
+
+      for (var i = 0; i < res.body.records.length - 1; ++i) {
+        res.body.records[i + 1]._id.should.be.least(res.body.records[i]._id);
+      }
+      done();
+    });
+  });
+
+  it('it should be able to order descendingly', done => {
+    agent
+    .get('/api/v1/vehicles' + '?order=descending')
+    .end((err, res) => {
+      res.should.have.status(200);
+      res.body.should.have.property('records').which.is.an('array');
+      res.body.metadata.should.have.property('totalCount').which.is.a('number');
+
+      for (var i = 0; i < res.body.records.length - 1; ++i) {
+        res.body.records[i + 1]._id.should.be.most(res.body.records[i]._id);
+      }
+      done();
+    });
+  });
 });
 
 describe('/api/v1/favorite', () => {
