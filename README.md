@@ -2,7 +2,7 @@
 An example for React Semantic UI sortable table.
 
 [![build status](https://img.shields.io/travis/gges5110/React-Semantic-UI-Sortable-Table-Example/master.svg)](https://travis-ci.org/gges5110/React-Semantic-UI-Sortable-Table-Example)
-[![Coverage Status](https://coveralls.io/repos/github/gges5110/React-Semantic-UI-Sortable-Table-Example/badge.svg?branch=master)](https://coveralls.io/github/gges5110/React-Semantic-UI-Sortable-Table-Example?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/gges5110/React-Semantic-UI-Sortable-Table-Example/badge.svg?branch=master&service=github)](https://coveralls.io/github/gges5110/React-Semantic-UI-Sortable-Table-Example?branch=master)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/a5f2bc2a9a8944549c95a17de5d863e9)](https://www.codacy.com/app/gges5110/React-Semantic-UI-Sortable-Table-Example?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=gges5110/React-Semantic-UI-Sortable-Table-Example&amp;utm_campaign=Badge_Grade)
 
 ## Prerequisite
