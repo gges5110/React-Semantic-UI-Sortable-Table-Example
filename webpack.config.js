@@ -1,4 +1,5 @@
 const webpack = require('webpack');
+const path = require('path')
 
 module.exports = {
   entry: {
@@ -6,21 +7,44 @@ module.exports = {
     vendor: ['react','react-dom','whatwg-fetch','babel-polyfill','semantic-ui-react'],
   },
   output: {
-    path: './static',
+    path: path.resolve(__dirname, './static'),
     filename: 'app.bundle.js'
   },
+  devServer: {
+    contentBase: './static',
+    hot: true,
+    port: 8000,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000',
+      },
+    }
+  },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          chunks: "initial",
+          test: "vendor",
+          name: "vendor",
+          filename: 'vendor.bundle.js',
+          enforce: true
+        }
+      }
+    }
+  },
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin('vendor','vendor.bundle.js')
+    new webpack.HotModuleReplacementPlugin()
   ],
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.jsx$/,
-        loader: 'babel-loader',
-        query: {
-          presets: ['react','es2015']
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader"
         }
-      },
+      }
     ]
   },
   devtool: 'source-map'
