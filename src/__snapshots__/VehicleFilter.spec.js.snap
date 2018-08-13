@@ -1,35 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MyComponent should render correctly in "debug" mode 1`] = `
-<Form
-  as="form"
->
-  <FormGroup>
-    <FormField>
-      <Popup
-        content=""
-        on="click"
-        open={false}
-        position="right center"
-        trigger={
-          <FormInput
-            as={[Function]}
-            control={[Function]}
-            error={false}
-            icon="search"
-            label="Filter"
-            name="filter"
-            onChange={[Function]}
-            placeholder="Enter the filter."
-            value=""
-          />
-        }
-      />
-    </FormField>
-  </FormGroup>
-</Form>
-`;
-
 exports[`VehicleFilter should render correctly in "debug" mode 1`] = `
 <Form
   as="form"
