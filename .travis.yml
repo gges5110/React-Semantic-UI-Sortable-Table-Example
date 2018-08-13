@@ -9,3 +9,8 @@ script:
   - "npm run test"
 after_success:
   - "npm run coveralls"
+
+deploy:
+  provider: heroku
+  api_key: $API_KEY
+  app: vehicles-table
