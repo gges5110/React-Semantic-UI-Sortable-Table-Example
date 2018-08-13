@@ -5,17 +5,17 @@ import { Segment, Header, Divider } from 'semantic-ui-react';
 import VehicleTable from './VehicleTable.jsx';
 import VehicleFilter from './VehicleFilter.jsx';
 
-const queryParams = ['limit','order','sortBy','filter','offset'];
+const queryParams = ['_limit','_order','_sort','q','_page'];
 
 export default class VehicleList extends React.Component {
   constructor() {
     super();
     this.state = {
       vehicles: [],
-      sortBy: '_id',
-      offset: 0,
-      limit: 10,
-      filter: '',
+      _sort: '_id',
+      _page: 1,
+      _limit: 10,
+      q: '',
       totalCount: 0,
       direction: null,
       loading: false,
@@ -29,33 +29,33 @@ export default class VehicleList extends React.Component {
   }
 
   handleSort(clickedColumn) {
-    const { sortBy, direction } = this.state
+    const { _sort, direction } = this.state
 
-    if (sortBy !== clickedColumn) {
+    if (_sort !== clickedColumn) {
       this.setState({
-        sortBy: clickedColumn,
+        _sort: clickedColumn,
         direction: 'ascending',
       })
 
       this.loadData({
-        sortBy: clickedColumn,
-        offset: 0,
-        order: 'ascending',
+        _sort: clickedColumn,
+        _page: 1,
+        _order: 'asc',
       });
 
       return
     }
 
     this.setState({
-      sortBy: clickedColumn,
-      offset: 0,
+      _sort: clickedColumn,
+      _page: 1,
       direction: direction === 'ascending' ? 'descending' : 'ascending',
     })
 
     this.loadData({
-      sortBy: clickedColumn,
-      offset: 0,
-      order: direction === 'ascending' ? 'descending' : 'ascending'
+      _sort: clickedColumn,
+      _page: 1,
+      _order: direction === 'ascending' ? 'desc' : 'asc'
     });
   }
 
@@ -64,23 +64,23 @@ export default class VehicleList extends React.Component {
   }
 
   onChangeLimit(event, data) {
-    if (data.value !== this.state.limit) {
-      this.setState({ limit: data.value, offset: 0  })
-      this.loadData({ limit: data.value, offset: 0  });
+    if (data.value !== this.state._limit) {
+      this.setState({ _limit: data.value, _page: 1  })
+      this.loadData({ _limit: data.value, _page: 1  });
     }
   }
 
   onSubmitFilter(filter) {
-    if (filter !== this.state.filter) {
-      this.setState({ filter: filter, offset: 0, loading: true })
-      this.loadData({ filter: filter, offset: 0 });
+    if (filter !== this.state.q) {
+      this.setState({ q: filter, _page: 1, loading: true })
+      this.loadData({ q: filter, _page: 1 });
     }
   }
 
   onChangePage(page) {
-    if (page !== this.state.offset) {
-      this.setState({ offset: page })
-      this.loadData({ offset: page });
+    if (page !== this.state._page) {
+      this.setState({ _page: page })
+      this.loadData({ _page: page });
     }
   }
 
@@ -120,13 +120,34 @@ export default class VehicleList extends React.Component {
 
     const esc = encodeURIComponent;
     const query = Object.keys(params)
-        .map(k => esc(k) + '=' + esc(params[k]))
-        .join('&');
+      .map(k => esc(k) + '=' + esc(params[k]))
+      .join('&');
+
+    // Make a request without limit first to get the total number of data.
+    let totalCountQuery;
+    if (params.q !== "") {
+      totalCountQuery = `q=${params.q}`;
+    }
+
+    fetch('/api/v1/vehicles?' + totalCountQuery).then(response => {
+      if (response.ok) {
+        response.json().then(data => {
+          // this.setState({ vehicles: data.records, totalCount: data.metadata.totalCount });
+          this.setState({ totalCount: data.length });
+        })
+      } else {
+        response.json().then(error => {
+          console.log(`Failed to load data: ${error.message}`);
+        });
+      }
+      this.setState({loading: false});
+    })
+
     fetch('/api/v1/vehicles?' + query).then(response => {
       if (response.ok) {
         response.json().then(data => {
           // this.setState({ vehicles: data.records, totalCount: data.metadata.totalCount });
-          this.setState({ vehicles: data.records, totalCount: 1000 });
+          this.setState({ vehicles: data });
         })
       } else {
         response.json().then(error => {
@@ -142,7 +163,7 @@ export default class VehicleList extends React.Component {
       <div>
         <Segment>
           <VehicleFilter
-            filter = { this.state.filter }
+            filter = { this.state.q }
             totalCount = {this.state.totalCount }
             onSubmitFilter = { this.onSubmitFilter }
             loading = { this.state.loading }
@@ -151,15 +172,15 @@ export default class VehicleList extends React.Component {
           <VehicleTable
             vehicles = { this.state.vehicles }
             totalCount = {this.state.totalCount }
-            totalPages = { Math.ceil(this.state.totalCount / this.state.limit) }
-            currentPage = { this.state.offset }
+            totalPages = { Math.ceil(this.state.totalCount / this.state._limit) }
+            currentPage = { this.state._page }
             onChangePage = { this.onChangePage }
             addFavorite = { this.addFavorite }
-            column = { this.state.sortBy }
+            column = { this.state._sort }
             direction = { this.state.direction }
             handleSort = { this.handleSort }
             onChangeLimit = { this.onChangeLimit }
-            limit = { this.state.limit.toString() }
+            limit = { this.state._limit.toString() }
           />
         </Segment>
       </div>

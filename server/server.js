@@ -1,13 +1,17 @@
-var app = require('./app').app;
+const jsonServer = require('json-server');
+const server = jsonServer.create();
+const path = require('path')
+const router = jsonServer.router(path.join(__dirname, 'vehicles.json'))
+const middlewares = jsonServer.defaults();
 const port = process.env.PORT || 3000;
 
-// https://stackoverflow.com/a/32878895/4816922
-if(!module.parent) {
-  app.listen(port, function () {
-    console.log(`App started on port ${port}`);
-  });
-}
+server.use(middlewares);
 
-module.exports = {
-  app,
-}
+// Add this before server.use(router)
+server.use(jsonServer.rewriter({
+  '/api/v1/*': '/$1'
+}))
+
+server.use(router);
+
+server.listen(port);

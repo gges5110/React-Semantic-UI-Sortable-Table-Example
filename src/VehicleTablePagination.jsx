@@ -15,13 +15,13 @@ export default class VehicleTablePagination extends React.Component {
   }
 
   begin() {
-    if (this.props.currentPage !== 0) {
-      this.props.onChangePage(0);
+    if (this.props.currentPage !== 1) {
+      this.props.onChangePage(1);
     }
   }
 
   prev() {
-    if (this.props.currentPage !== 0) {
+    if (this.props.currentPage !== 1) {
       this.props.onChangePage(this.props.currentPage - 1);
     }
   }
@@ -45,12 +45,12 @@ export default class VehicleTablePagination extends React.Component {
   render() {
     var { totalPages, showPages, currentPage } = this.props;
 
-    if (totalPages === 0) {
+    if (totalPages === 1) {
       return null;
     }
 
     let diff = Math.floor(showPages / 2),
-        start = Math.max(currentPage - diff, 0),
+        start = Math.max(currentPage - diff, 1),
         end = Math.min(start + showPages, totalPages);
 
     if (totalPages >= showPages && end >= totalPages) {
@@ -59,7 +59,7 @@ export default class VehicleTablePagination extends React.Component {
 
     let buttons = [], isCurrent, btnEvent;
 
-    for (let i = start; i < end; i++) {
+    for (let i = start; i <= end; i++) {
       isCurrent = currentPage === i;
       // If the button is for the current page then disable the event.
       if (!isCurrent) {
@@ -69,7 +69,7 @@ export default class VehicleTablePagination extends React.Component {
       }
       buttons.push(
         <Menu.Item key={i} active={isCurrent} as='a' onClick={btnEvent}>
-          {i + 1}
+          {i}
         </Menu.Item>
       );
     }
@@ -83,7 +83,7 @@ export default class VehicleTablePagination extends React.Component {
                 as='a'
                 icon
                 onClick={this.begin}
-                disabled={this.props.currentPage === 0}
+                disabled={this.props.currentPage === 1}
               >
               <Icon name='angle double left' />
             </Menu.Item>
@@ -91,7 +91,7 @@ export default class VehicleTablePagination extends React.Component {
               as='a'
               icon
               onClick={this.prev}
-              disabled={this.props.currentPage === 0}
+              disabled={this.props.currentPage === 1}
             >
               <Icon name='angle left' />
             </Menu.Item>
@@ -102,7 +102,7 @@ export default class VehicleTablePagination extends React.Component {
               as='a'
               icon
               onClick={this.next}
-              disabled={this.props.currentPage === this.props.totalPages - 1}
+              disabled={this.props.currentPage === this.props.totalPages}
             >
               <Icon name='angle right' />
             </Menu.Item>
@@ -110,7 +110,7 @@ export default class VehicleTablePagination extends React.Component {
                 as='a'
                 icon
                 onClick={this.end}
-                disabled={this.props.currentPage === this.props.totalPages - 1}
+                disabled={this.props.currentPage === this.props.totalPages}
               >
               <Icon name='angle double right' />
             </Menu.Item>
