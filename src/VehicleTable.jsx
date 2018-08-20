@@ -19,7 +19,7 @@ class VehicleRow extends React.Component {
     const icon = this.props.vehicle.favorite ? <Icon name='heart'/> : <Icon name='empty heart' />;
     return (
         <Table.Row>
-          <Table.Cell>{this.props.vehicle._id}</Table.Cell>
+          <Table.Cell>{this.props.vehicle.id}</Table.Cell>
           <Table.Cell>{this.props.vehicle.make}</Table.Cell>
           <Table.Cell>{this.props.vehicle.model}</Table.Cell>
           <Table.Cell>{this.props.vehicle.year}</Table.Cell>
@@ -47,7 +47,7 @@ export default function VehicleTable(props) {
   if (props.vehicles === undefined) {
     return <div></div>;
   }
-  const vehicleRows = props.vehicles.map(vehicle => <VehicleRow key={vehicle._id} vehicle={vehicle} addFavorite={props.addFavorite} />)
+  const vehicleRows = props.vehicles.map(vehicle => <VehicleRow key={vehicle.id} vehicle={vehicle} addFavorite={props.addFavorite} />)
   return (
     <div>
       Records per page:
@@ -57,7 +57,7 @@ export default function VehicleTable(props) {
       <Table celled selectable sortable >
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell width={1} sorted = {props.column === '_id' ? props.direction : null } onClick={() => props.handleSort('_id')}>#</Table.HeaderCell>
+            <Table.HeaderCell width={1} sorted = {props.column === 'id' ? props.direction : null } onClick={() => props.handleSort('id')}>#</Table.HeaderCell>
             <Table.HeaderCell width={3} sorted = {props.column === 'make' ? props.direction : null } onClick={() => props.handleSort('make')}>Make</Table.HeaderCell>
             <Table.HeaderCell width={3} sorted = {props.column === 'model' ? props.direction : null } onClick={() => props.handleSort('model')}>Model</Table.HeaderCell>
             <Table.HeaderCell width={1} sorted = {props.column === 'year' ? props.direction : null } onClick={() => props.handleSort('year')}>Year</Table.HeaderCell>

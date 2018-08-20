@@ -12,7 +12,7 @@ export default class VehicleList extends React.Component {
     super();
     this.state = {
       vehicles: [],
-      _sort: '_id',
+      _sort: 'id',
       _page: 1,
       _limit: 10,
       q: '',
@@ -85,16 +85,17 @@ export default class VehicleList extends React.Component {
   }
 
   addFavorite(vehicle) {
-    fetch('/api/v1/favorite', {
-      method: 'POST',
+    vehicle.favorite = !vehicle.favorite;
+    fetch(`/api/v1/vehicles/${vehicle.id}`, {
+      method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({'vehicle': vehicle}),
+      body: JSON.stringify(vehicle),
     }).then(response => {
       if (response.ok) {
         response.json().then(data => {
           var vehicles = this.state.vehicles.slice();
           for (var i = 0; i < vehicles.length; ++i) {
-            if (vehicles[i]._id === data._id) {
+            if (vehicles[i].id === data.id) {
               vehicles[i] = data;
               break;
             }
