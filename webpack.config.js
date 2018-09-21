@@ -7,11 +7,11 @@ module.exports = {
     vendor: ['react','react-dom','whatwg-fetch','semantic-ui-react'],
   },
   output: {
-    path: path.resolve(__dirname, './static'),
+    path: path.resolve(__dirname, './public'),
     filename: 'app.bundle.js'
   },
   devServer: {
-    contentBase: './static',
+    contentBase: './public',
     hot: true,
     port: 8000,
     proxy: {
