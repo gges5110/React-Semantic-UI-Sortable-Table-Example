@@ -39,6 +39,14 @@ All of the above commands can be found in the scripts section of ```package.json
 ## Deployment
 To deploy the application, there is no need to include the React JS files under the ```/src``` folder. Just include ```index.html```, ```app.bundle.js``` and ```vendor.bundle.js``` and the files in ```/server```. To install the dependencies for deployment, run ```npm install --production```.
 
+## Docker
+```bash
+# Build the image
+docker build -t {SOME_TAG} .
+# Run the container with exposing port 5000
+docker run -p 5000:3000 {SOME_TAG}
+```
+
 
 ## Server APIs
 
