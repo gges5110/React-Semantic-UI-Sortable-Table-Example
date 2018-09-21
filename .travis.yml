@@ -10,7 +10,16 @@ script:
 after_success:
   - "npm run coveralls"
 
+before_deploy: npm install now --no-save # Install Now CLI on Travis
 deploy:
-  provider: heroku
-  api_key: $API_KEY
-  app: vehicles-table
+  - provider: script # Run a custom deployment script which we will define below
+    script: now --token $NOW_TOKEN
+    skip_cleanup: true
+    on:
+      all_branches: true
+      master: false
+  - provider: script
+    script: now --token $NOW_TOKEN && now alias --token $NOW_TOKEN
+    skip_cleanup: true
+    on:
+      master: true
