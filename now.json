@@ -4,6 +4,7 @@
   "features": {
     "cloud": "v2"
   },
+  "alias": "react-semantic-ui-sortable-table-example",
   "static": {
     "rewrites": [
       {
