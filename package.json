@@ -49,6 +49,11 @@
     ],
     "setupFiles": [
       "./src/setupTests.js"
+    ],
+    "collectCoverageFrom": [
+      "**/src/*.{jsx}",
+      "!**/node_modules/**",
+      "!**/vendor/**"
     ]
   },
   "author": "Gerry Wu",
