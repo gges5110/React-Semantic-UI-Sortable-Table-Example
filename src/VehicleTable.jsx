@@ -47,7 +47,7 @@ export default function VehicleTable(props) {
   if (props.vehicles === undefined) {
     return <div></div>;
   }
-  const vehicleRows = props.vehicles.map(vehicle => <VehicleRow key={vehicle.id} vehicle={vehicle} addFavorite={props.addFavorite} />)
+  const vehicleRows = props.vehicles.map(vehicle => <VehicleRow vehicle={vehicle} addFavorite={props.addFavorite} />)
   return (
     <div>
       Records per page:
