@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`VehicleFilter should render correctly in "debug" mode 1`] = `
+exports[`VehicleFilter snapshot regression 1`] = `
 <Form
   as="form"
 >

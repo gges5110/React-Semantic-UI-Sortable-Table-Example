@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Container, Header, Button, Icon, Menu } from 'semantic-ui-react'
+import 'semantic-ui-css/semantic.min.css';
 
 import VehicleList from './VehicleList.jsx';
 

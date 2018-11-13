@@ -43,7 +43,7 @@ export default class VehicleTablePagination extends React.Component {
   }
 
   render() {
-    var { totalPages, showPages, currentPage } = this.props;
+    let { totalPages, showPages, currentPage } = this.props;
 
     if (totalPages === 1) {
       return null;

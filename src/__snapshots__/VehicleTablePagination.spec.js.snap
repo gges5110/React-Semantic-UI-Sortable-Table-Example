@@ -1,0 +1,98 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`VehicleTablePagination snapshot regression 1`] = `
+<TableRow
+  as="tr"
+  cellAs="td"
+>
+  <TableHeaderCell
+    as="th"
+    colSpan="8"
+  >
+    Total pages: 
+    10
+    <Menu
+      borderless={true}
+      floated="right"
+      pagination={true}
+    >
+      <MenuItem
+        as="a"
+        disabled={true}
+        icon={true}
+        onClick={[Function]}
+      >
+        <Icon
+          as="i"
+          name="angle double left"
+        />
+      </MenuItem>
+      <MenuItem
+        as="a"
+        disabled={true}
+        icon={true}
+        onClick={[Function]}
+      >
+        <Icon
+          as="i"
+          name="angle left"
+        />
+      </MenuItem>
+      <MenuItem
+        active={true}
+        as="a"
+        key="1"
+        onClick={[Function]}
+      >
+        1
+      </MenuItem>
+      <MenuItem
+        active={false}
+        as="a"
+        key="2"
+        onClick={[Function]}
+      >
+        2
+      </MenuItem>
+      <MenuItem
+        active={false}
+        as="a"
+        key="3"
+        onClick={[Function]}
+      >
+        3
+      </MenuItem>
+      <MenuItem
+        active={false}
+        as="a"
+        key="4"
+        onClick={[Function]}
+      >
+        4
+      </MenuItem>
+      <MenuItem
+        as="a"
+        disabled={false}
+        icon={true}
+        onClick={[Function]}
+      >
+        <Icon
+          as="i"
+          name="angle right"
+        />
+      </MenuItem>
+      <MenuItem
+        as="a"
+        disabled={false}
+        icon={true}
+        onClick={[Function]}
+      >
+        <Icon
+          as="i"
+          name="angle double right"
+        />
+      </MenuItem>
+    </Menu>
+  </TableHeaderCell>
+</TableRow>
+`;

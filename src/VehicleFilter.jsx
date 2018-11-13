@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form, Popup, Button, Loader } from 'semantic-ui-react';
+import { Form, Popup } from 'semantic-ui-react';
+import 'semantic-ui-css/semantic.min.css';
 
 const regex = new RegExp("^[a-zA-Z0-9 ]+$");
 
@@ -10,7 +11,7 @@ export default class VehicleFilter extends React.Component {
     this.state = {
       filter: '',
       filterValid: true,
-    }
+    };
     this.handleOnChange = this.handleOnChange.bind(this);
   }
 
@@ -61,6 +62,5 @@ export default class VehicleFilter extends React.Component {
 
 VehicleFilter.propTypes = {
   onSubmitFilter: PropTypes.func.isRequired,
-  filter: PropTypes.string.isRequired,
   totalCount: PropTypes.number.isRequired,
-}
+};

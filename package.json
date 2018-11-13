@@ -17,7 +17,8 @@
     "heroku-postbuild": "npm install --dev && webpack --mode production --progress",
     "test": "jest",
     "coverage": "jest --coverage",
-    "coveralls": "jest --coverage --coverageReporters=text-lcov | coveralls"
+    "coveralls": "jest --coverage --coverageReporters=text-lcov | coveralls",
+    "storybook": "start-storybook -p 9001 -c .storybook"
   },
   "dependencies": {
     "babel-core": "^6.26.3",
@@ -36,13 +37,25 @@
     "react-dom": "^16.4.2",
     "react-test-renderer": "^16.4.2",
     "semantic-ui-react": "^0.77.0",
+    "sinon": "^6.3.5",
     "source-map-support": "^0.4.2",
     "webpack": "^4.16.5",
     "webpack-cli": "^3.1.0",
     "webpack-dev-server": "^3.1.5",
     "whatwg-fetch": "^1.0.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@storybook/addon-actions": "^4.0.0-alpha.24",
+    "@storybook/addon-info": "^4.0.0-alpha.24",
+    "@storybook/react": "^4.0.0-alpha.24",
+    "css-loader": "^1.0.0",
+    "file-loader": "^2.0.0",
+    "mini-css-extract-plugin": "^0.4.4",
+    "raw-loader": "^0.5.1",
+    "semantic-ui-css": "^2.4.0",
+    "style-loader": "^0.23.1",
+    "url-loader": "^1.1.2"
+  },
   "jest": {
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
