@@ -10,7 +10,7 @@ export default class VehicleFilter extends React.Component {
     this.state = {
       filter: '',
       filterValid: true,
-    }
+    };
     this.handleOnChange = this.handleOnChange.bind(this);
   }
 
@@ -63,4 +63,4 @@ VehicleFilter.propTypes = {
   onSubmitFilter: PropTypes.func.isRequired,
   filter: PropTypes.string.isRequired,
   totalCount: PropTypes.number.isRequired,
-}
+};

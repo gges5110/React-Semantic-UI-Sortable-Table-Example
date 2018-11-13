@@ -28,13 +28,13 @@ export default class VehicleList extends React.Component {
   }
 
   handleSort(clickedColumn) {
-    const { _sort, direction } = this.state
+    const { _sort, direction } = this.state;
 
     if (_sort !== clickedColumn) {
       this.setState({
         _sort: clickedColumn,
         direction: 'ascending',
-      })
+      });
 
       this.loadData({
         _sort: clickedColumn,
@@ -49,7 +49,7 @@ export default class VehicleList extends React.Component {
       _sort: clickedColumn,
       _page: 1,
       direction: direction === 'ascending' ? 'descending' : 'ascending',
-    })
+    });
 
     this.loadData({
       _sort: clickedColumn,
@@ -64,21 +64,21 @@ export default class VehicleList extends React.Component {
 
   onChangeLimit(event, data) {
     if (data.value !== this.state._limit) {
-      this.setState({ _limit: data.value, _page: 1  })
+      this.setState({ _limit: data.value, _page: 1  });
       this.loadData({ _limit: data.value, _page: 1  });
     }
   }
 
   onSubmitFilter(filter) {
     if (filter !== this.state.q) {
-      this.setState({ q: filter, _page: 1, loading: true })
+      this.setState({ q: filter, _page: 1, loading: true });
       this.loadData({ q: filter, _page: 1 });
     }
   }
 
   onChangePage(page) {
     if (page !== this.state._page) {
-      this.setState({ _page: page })
+      this.setState({ _page: page });
       this.loadData({ _page: page });
     }
   }
@@ -141,7 +141,7 @@ export default class VehicleList extends React.Component {
         });
       }
       this.setState({loading: false});
-    })
+    });
 
     fetch('/api/v1/vehicles?' + query).then(response => {
       if (response.ok) {
