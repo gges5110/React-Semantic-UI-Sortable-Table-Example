@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Table, Checkbox, Icon, Dropdown } from 'semantic-ui-react'
+import {Button, Dropdown, Icon, Table} from 'semantic-ui-react'
 
 import VehicleDropdownOptions from './VehicleDropdownOptions.jsx';
 import VehicleTablePagination from './VehicleTablePagination.jsx';
@@ -41,7 +41,7 @@ class VehicleRow extends React.Component {
 VehicleRow.propTypes = {
   vehicle: PropTypes.object.isRequired,
   addFavorite: PropTypes.func.isRequired,
-}
+};
 
 export default function VehicleTable(props) {
   if (props.vehicles === undefined) {
@@ -95,4 +95,4 @@ VehicleTable.propTypes = {
   addFavorite: PropTypes.func.isRequired,
   onChangeLimit: PropTypes.func.isRequired,
   limit: PropTypes.string.isRequired,
-}
+};

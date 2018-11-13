@@ -1,6 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Segment, Header, Divider } from 'semantic-ui-react';
+import {Divider, Segment} from 'semantic-ui-react';
 
 import VehicleTable from './VehicleTable.jsx';
 import VehicleFilter from './VehicleFilter.jsx';

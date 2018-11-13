@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form, Popup, Button, Loader } from 'semantic-ui-react';
+import {Form, Popup} from 'semantic-ui-react';
 
 const regex = new RegExp("^[a-zA-Z0-9 ]+$");
 

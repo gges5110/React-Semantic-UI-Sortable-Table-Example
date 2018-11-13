@@ -1,10 +1,8 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import { Container, Header, Button, Icon, Menu } from 'semantic-ui-react'
+import {Button, Container, Header, Icon, Menu} from 'semantic-ui-react'
 
 import VehicleList from './VehicleList.jsx';
-
-var contentNode = document.getElementById('contents');
 
 class App extends Component {
   render() {
@@ -32,4 +30,4 @@ class App extends Component {
   };
 }
 
-ReactDOM.render(<App />, contentNode); // Render the component inside the content Node
+ReactDOM.render(<App />, document.getElementById('contents')); // Render the component inside the content Node

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Table, Menu, Icon } from 'semantic-ui-react'
+import {Icon, Menu, Table} from 'semantic-ui-react'
 
 const preventDefault = e => e.preventDefault();
 

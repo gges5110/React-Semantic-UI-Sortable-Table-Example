@@ -4,7 +4,7 @@
 # testing
 /coverage
 
-public/app.bundle.js
-public/app.bundle.js.map
-public/vendor.bundle.js
-public/vendor.bundle.js.map
+.idea/*
+
+public/*
+!public/index.html
