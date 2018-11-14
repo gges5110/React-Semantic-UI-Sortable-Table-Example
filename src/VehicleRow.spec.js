@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import {VehicleRow} from "./VehicleRow";
 
-describe('VehicleTable', () => {
+describe('VehicleRow', () => {
   it('should render correctly', () => {
     const vehicles = [
       {
@@ -39,7 +39,7 @@ describe('VehicleTable', () => {
 
     shallow(
       <VehicleRow
-        vehicles={vehicles[0]}
+        vehicle={vehicles[0]}
         addFavorite={() => {}}
       />
     );
