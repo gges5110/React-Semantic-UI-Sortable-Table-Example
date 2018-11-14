@@ -1,7 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import VehicleTable from './VehicleTable';
-import "isomorphic-fetch";
+import {VehicleRow} from "./VehicleRow";
 
 describe('VehicleTable', () => {
   it('should render correctly', () => {
@@ -39,15 +38,9 @@ describe('VehicleTable', () => {
     ];
 
     shallow(
-      <VehicleTable
-        vehicles={vehicles}
-        totalCount={100}
-        totalPages={10}
-        currentPage={0}
-        onChangePage={() => {}}
+      <VehicleRow
+        vehicles={vehicles[0]}
         addFavorite={() => {}}
-        onChangeLimit={() => {}}
-        limit={'10'}
       />
     );
   });
