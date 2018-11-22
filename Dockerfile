@@ -1,7 +1,7 @@
 FROM mhart/alpine-node:10 as base
 WORKDIR /usr/src
 COPY package.json package-lock.json /usr/src/
-RUN npm install --production
+RUN npm ci --production
 COPY . .
 RUN npm run build
 

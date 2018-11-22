@@ -76,10 +76,11 @@ export default class VehicleList extends React.Component {
     }
   }
 
-  onChangePage(page) {
-    if (page !== this.state._page) {
-      this.setState({ _page: page });
-      this.loadData({ _page: page });
+  onChangePage(event, data) {
+    const {activePage} = data;
+    if (activePage !== this.state._page) {
+      this.setState({ _page: activePage });
+      this.loadData({ _page: activePage });
     }
   }
 

@@ -8,6 +8,7 @@ exports[`VehicleFilter should render correctly in "debug" mode 1`] = `
     <FormField>
       <Popup
         content=""
+        keepInViewPort={true}
         on="click"
         open={false}
         position="right center"
