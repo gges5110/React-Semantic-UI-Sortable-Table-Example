@@ -1,7 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import VehicleTable from './VehicleTable';
-import "isomorphic-fetch";
+import {VehicleTable} from './VehicleTable';
 
 describe('VehicleTable', () => {
   it('should render correctly', () => {

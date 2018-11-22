@@ -4,7 +4,7 @@ import {Form, Popup} from 'semantic-ui-react';
 
 const regex = new RegExp("^[a-zA-Z0-9 ]+$");
 
-export default class VehicleFilter extends React.Component {
+export class VehicleFilter extends React.Component {
   constructor() {
     super();
     this.state = {

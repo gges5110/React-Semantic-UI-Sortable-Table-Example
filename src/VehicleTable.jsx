@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Dropdown, Table, Pagination} from 'semantic-ui-react'
+import {Table, Pagination} from 'semantic-ui-react'
 
-import VehicleDropdownOptions from './VehicleDropdownOptions.jsx';
+import {VehiclePageSizeSelect} from './VehiclePageSizeSelect.jsx';
 import {VehicleRow} from "./VehicleRow.jsx";
 import {VehicleTableHeader} from "./VehicleTableHeader.jsx";
 
-export default function VehicleTable(props) {
+export const VehicleTable = (props) => {
   if (props.vehicles === undefined) {
     return <div/>;
   }
@@ -14,14 +14,10 @@ export default function VehicleTable(props) {
     (vehicle, index) => <VehicleRow key={index} vehicle={vehicle} addFavorite={props.addFavorite} />
   );
   return (
-    <div>
-      Records per page:
-      {' '}
-      <Dropdown
-        inline
-        options={VehicleDropdownOptions.limitOptions}
-        defaultValue={props.limit}
-        onChange={props.onChangeLimit}
+    <React.Fragment>
+      <VehiclePageSizeSelect
+        limit={props.limit}
+        onChangeLimit={props.onChangeLimit}
       />
       Total count: {props.totalCount}.
       <Table celled selectable sortable >
@@ -47,7 +43,7 @@ export default function VehicleTable(props) {
           </Table.Row>
         </Table.Footer>
       </Table>
-    </div>
+    </React.Fragment>
   );
 }
 

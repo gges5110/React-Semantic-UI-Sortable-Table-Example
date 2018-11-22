@@ -1,8 +1,8 @@
 import React from 'react';
 import {Divider, Segment} from 'semantic-ui-react';
 
-import VehicleTable from './VehicleTable.jsx';
-import VehicleFilter from './VehicleFilter.jsx';
+import {VehicleTable} from './VehicleTable.jsx';
+import {VehicleFilter} from './VehicleFilter.jsx';
 
 const queryParams = ['_limit','_order','_sort','q','_page'];
 
@@ -13,10 +13,10 @@ export default class VehicleList extends React.Component {
       vehicles: [],
       _sort: 'id',
       _page: 1,
+      _order: null,
       _limit: 10,
       q: '',
       totalCount: 0,
-      direction: null,
       loading: false,
      };
     this.loadData = this.loadData.bind(this);
@@ -27,34 +27,34 @@ export default class VehicleList extends React.Component {
     this.handleSort = this.handleSort.bind(this);
   }
 
+  directionConverter(order) {
+    if (order === 'asc') {
+      return 'ascending';
+    } else if (order === 'desc') {
+      return 'descending';
+    } else {
+      return null;
+    }
+  }
+
   handleSort(clickedColumn) {
-    const { _sort, direction } = this.state;
+    const { _sort, _order } = this.state;
 
+    let newOrder = _order === 'asc' ? 'desc' : 'asc';
     if (_sort !== clickedColumn) {
-      this.setState({
-        _sort: clickedColumn,
-        direction: 'ascending',
-      });
-
-      this.loadData({
-        _sort: clickedColumn,
-        _page: 1,
-        _order: 'asc',
-      });
-
-      return
+      newOrder = 'asc';
     }
 
     this.setState({
       _sort: clickedColumn,
       _page: 1,
-      direction: direction === 'ascending' ? 'descending' : 'ascending',
+      _order: newOrder,
     });
 
     this.loadData({
       _sort: clickedColumn,
       _page: 1,
-      _order: direction === 'ascending' ? 'desc' : 'asc'
+      _order: newOrder,
     });
   }
 
@@ -161,30 +161,28 @@ export default class VehicleList extends React.Component {
 
   render() {
     return (
-      <div>
-        <Segment>
-          <VehicleFilter
-            filter = { this.state.q }
-            totalCount = {this.state.totalCount }
-            onSubmitFilter = { this.onSubmitFilter }
-            loading = { this.state.loading }
-          />
-        <Divider/>
-          <VehicleTable
-            vehicles = { this.state.vehicles }
-            totalCount = {this.state.totalCount }
-            totalPages = { Math.ceil(this.state.totalCount / this.state._limit) }
-            currentPage = { this.state._page }
-            onChangePage = { this.onChangePage }
-            addFavorite = { this.addFavorite }
-            column = { this.state._sort }
-            direction = { this.state.direction }
-            handleSort = { this.handleSort }
-            onChangeLimit = { this.onChangeLimit }
-            limit = { this.state._limit.toString() }
-          />
-        </Segment>
-      </div>
+      <Segment>
+        <VehicleFilter
+          filter = { this.state.q }
+          totalCount = {this.state.totalCount }
+          onSubmitFilter = { this.onSubmitFilter }
+          loading = { this.state.loading }
+        />
+      <Divider/>
+        <VehicleTable
+          vehicles = { this.state.vehicles }
+          totalCount = {this.state.totalCount }
+          totalPages = { Math.ceil(this.state.totalCount / this.state._limit) }
+          currentPage = { this.state._page }
+          onChangePage = { this.onChangePage }
+          addFavorite = { this.addFavorite }
+          column = { this.state._sort }
+          direction = { this.directionConverter(this.state._order) }
+          handleSort = { this.handleSort }
+          onChangeLimit = { this.onChangeLimit }
+          limit = { this.state._limit.toString() }
+        />
+      </Segment>
     )
   }
 }

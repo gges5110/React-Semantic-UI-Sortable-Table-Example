@@ -1,6 +1,6 @@
 import React from 'react';
 import {shallow} from 'enzyme';
-import VehicleFilter from './VehicleFilter';
+import {VehicleFilter} from './VehicleFilter';
 
 describe('VehicleFilter', () => {
   it('should render correctly in "debug" mode', () => {
