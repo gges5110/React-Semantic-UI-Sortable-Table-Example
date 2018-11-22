@@ -14,7 +14,6 @@
     "start": "node server/server.js",
     "build": "webpack --mode production",
     "build:watch": "webpack-dev-server --mode development --open --hot",
-    "heroku-postbuild": "npm install --dev && webpack --mode production --progress",
     "test": "jest",
     "coverage": "jest --coverage",
     "coveralls": "jest --coverage --coverageReporters=text-lcov | coveralls"
