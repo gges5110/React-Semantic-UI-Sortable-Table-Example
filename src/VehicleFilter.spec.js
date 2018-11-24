@@ -6,9 +6,7 @@ describe('VehicleFilter', () => {
   it('should render correctly in "debug" mode', () => {
     let filter = '';
     let totalCount = 100;
-    let onSubmitFilter = function() {
-
-    }
+    let onSubmitFilter = function() {};
 
     const component = shallow(<VehicleFilter
       filter = { filter }
@@ -17,5 +15,7 @@ describe('VehicleFilter', () => {
       debug />);
 
     expect(component).toMatchSnapshot();
+
+    component.instance().handleOnChange({}, {});
   });
 });

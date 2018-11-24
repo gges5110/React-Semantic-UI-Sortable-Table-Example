@@ -50,4 +50,18 @@ describe('VehicleTable', () => {
       />
     );
   });
+
+  it('Empty props.vehicles', () => {
+    shallow(
+      <VehicleTable
+        totalCount={100}
+        totalPages={10}
+        currentPage={0}
+        onChangePage={() => {}}
+        addFavorite={() => {}}
+        onChangeLimit={() => {}}
+        limit={'10'}
+      />
+    );
+  });
 });

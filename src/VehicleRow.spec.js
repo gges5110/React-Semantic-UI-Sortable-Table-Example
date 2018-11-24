@@ -1,6 +1,7 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import {VehicleRow} from "./VehicleRow";
+import {Button} from 'semantic-ui-react';
 
 describe('VehicleRow', () => {
   it('should render correctly', () => {
@@ -37,11 +38,19 @@ describe('VehicleRow', () => {
       }
     ];
 
-    shallow(
+    const wrapper = mount(
       <VehicleRow
         vehicle={vehicles[0]}
-        addFavorite={() => {}}
+        addFavorite={(vehicle) => {
+          vehicle.favorite = !vehicle.favorite;
+        }}
       />
+    );
+
+    wrapper.find(Button).forEach(
+      (node) => {
+        node.simulate('click');
+      }
     );
   });
 });

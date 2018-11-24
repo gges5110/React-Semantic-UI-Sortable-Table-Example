@@ -11,7 +11,7 @@ export function VehicleTableHeader(props) {
         <Table.HeaderCell width={1} sorted = {props.column === 'year' ? props.direction : null } onClick={() => props.handleSort('year')}>Year</Table.HeaderCell>
         <Table.HeaderCell width={1} sorted = {props.column === 'package' ? props.direction : null } onClick={() => props.handleSort('package')}>Package</Table.HeaderCell>
         <Table.HeaderCell width={1} sorted = {props.column === 'fuelType' ? props.direction : null } onClick={() => props.handleSort('fuelType')}>Fuel Type</Table.HeaderCell>
-        <Table.HeaderCell width={1} sorted = {props.column === 'trasmission' ? props.direction : null } onClick={() => props.handleSort('transmission')}>Transmission</Table.HeaderCell>
+        <Table.HeaderCell width={1} sorted = {props.column === 'transmission' ? props.direction : null } onClick={() => props.handleSort('transmission')}>Transmission</Table.HeaderCell>
         <Table.HeaderCell width={1} sorted = {props.column === 'favorite' ? props.direction : null } onClick={() => props.handleSort('favorite')}>Favorite</Table.HeaderCell>
       </Table.Row>
     </Table.Header>

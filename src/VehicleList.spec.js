@@ -8,4 +8,12 @@ describe('VehicleList', () => {
     shallow(<VehicleList
     />);
   });
+
+  it('handleSort', () => {
+    const wrapper = shallow(<VehicleList/>);
+    wrapper.instance().handleSort('make');
+    wrapper.instance().onChangeLimit({}, { value: 20 });
+    wrapper.instance().onSubmitFilter('someFilterTerm');
+    wrapper.instance().onChangePage({}, { activePage: 3 });
+  });
 });
