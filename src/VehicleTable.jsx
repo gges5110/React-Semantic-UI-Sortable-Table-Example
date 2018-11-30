@@ -7,8 +7,8 @@ import {VehicleRow} from "./VehicleRow.jsx";
 import {VehicleTableHeader} from "./VehicleTableHeader.jsx";
 
 export const VehicleTable = (props) => {
-  if (props.vehicles === undefined) {
-    return <div/>;
+  if (!props.vehicles) {
+    return <React.Fragment/>;
   }
   const vehicleRows = props.vehicles.map(
     (vehicle, index) => <VehicleRow key={index} vehicle={vehicle} addFavorite={props.addFavorite} />
@@ -45,10 +45,9 @@ export const VehicleTable = (props) => {
       </Table>
     </React.Fragment>
   );
-}
+};
 
 VehicleTable.propTypes = {
-  vehicles: PropTypes.array.isRequired,
   totalCount: PropTypes.number.isRequired,
   totalPages: PropTypes.number.isRequired,
   currentPage: PropTypes.number.isRequired,

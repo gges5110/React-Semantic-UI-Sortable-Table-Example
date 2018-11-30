@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import {VehicleRow} from "./VehicleRow";
-import {Button} from 'semantic-ui-react';
+import {Button, Table} from 'semantic-ui-react';
 
 describe('VehicleRow', () => {
   it('should render correctly', () => {
@@ -39,12 +39,16 @@ describe('VehicleRow', () => {
     ];
 
     const wrapper = mount(
-      <VehicleRow
-        vehicle={vehicles[0]}
-        addFavorite={(vehicle) => {
-          vehicle.favorite = !vehicle.favorite;
-        }}
-      />
+      <Table>
+        <Table.Body>
+          <VehicleRow
+            vehicle={vehicles[0]}
+            addFavorite={(vehicle) => {
+              vehicle.favorite = !vehicle.favorite;
+            }}
+          />
+        </Table.Body>
+      </Table>
     );
 
     wrapper.find(Button).forEach(

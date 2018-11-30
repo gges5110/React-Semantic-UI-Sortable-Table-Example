@@ -93,8 +93,8 @@ export default class VehicleList extends React.Component {
     }).then(response => {
       if (response.ok) {
         response.json().then(data => {
-          var vehicles = this.state.vehicles.slice();
-          for (var i = 0; i < vehicles.length; ++i) {
+          const vehicles = this.state.vehicles.slice();
+          for (let i = 0; i < vehicles.length; ++i) {
             if (vehicles[i].id === data.id) {
               vehicles[i] = data;
               break;
@@ -125,7 +125,7 @@ export default class VehicleList extends React.Component {
       .join('&');
 
     // Make a request without limit first to get the total number of data.
-    let totalCountQuery;
+    let totalCountQuery = '';
     if (params.q !== "") {
       totalCountQuery = `q=${params.q}`;
     }
@@ -133,7 +133,6 @@ export default class VehicleList extends React.Component {
     fetch('/api/v1/vehicles?' + totalCountQuery).then(response => {
       if (response.ok) {
         response.json().then(data => {
-          // this.setState({ vehicles: data.records, totalCount: data.metadata.totalCount });
           this.setState({ totalCount: data.length });
         })
       } else {
@@ -147,7 +146,6 @@ export default class VehicleList extends React.Component {
     fetch('/api/v1/vehicles?' + query).then(response => {
       if (response.ok) {
         response.json().then(data => {
-          // this.setState({ vehicles: data.records, totalCount: data.metadata.totalCount });
           this.setState({ vehicles: data });
         })
       } else {

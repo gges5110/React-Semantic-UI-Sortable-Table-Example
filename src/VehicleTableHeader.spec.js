@@ -11,10 +11,14 @@ describe('VehicleTableHeader', () => {
   });
 
   it('Column Header On Click', () => {
-    const wrapper = mount(<VehicleTableHeader
-      handleSort={jest.fn()}
-      column={'id'}
-    />);
+    const wrapper = mount(
+      <Table>
+        <VehicleTableHeader
+          handleSort={jest.fn()}
+          column={'id'}
+        />
+      </Table>
+    );
     wrapper.find(Table.HeaderCell).forEach(
       (node) => {
         node.simulate('click');
@@ -35,10 +39,14 @@ describe('VehicleTableHeader', () => {
     ];
 
     columns.forEach((column) => {
-      shallow(<VehicleTableHeader
-        column={column}
-        direction={'ascending'}
-      />);
+      shallow(
+        <Table>
+          <VehicleTableHeader
+            column={column}
+            direction={'ascending'}
+          />
+        </Table>
+      );
     });
   });
 });
