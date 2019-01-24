@@ -130,7 +130,7 @@ export default class VehicleList extends React.Component {
       totalCountQuery = `q=${params.q}`;
     }
 
-    fetch('/api/v1/vehicles?' + totalCountQuery).then(response => {
+    fetch(`/api/v1/vehicles?${totalCountQuery}`).then(response => {
       if (response.ok) {
         response.json().then(data => {
           this.setState({ totalCount: data.length });

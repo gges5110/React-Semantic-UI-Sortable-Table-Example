@@ -16,7 +16,8 @@
     "build:watch": "webpack-dev-server --mode development --open --hot",
     "test": "jest",
     "coverage": "jest --coverage",
-    "coveralls": "jest --coverage --coverageReporters=text-lcov | coveralls"
+    "coveralls": "jest --coverage --coverageReporters=text-lcov | coveralls",
+    "now-build": "npm run build && mv public dist"
   },
   "dependencies": {
     "babel-core": "^6.26.3",
