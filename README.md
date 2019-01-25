@@ -13,25 +13,37 @@ Node.js runtime environment.
 # Install dependencies
 npm ci
 
-# Start JSON Server at port 3000.
-npm start
+# Start JSON server on port 4000
+npm run start:server
 
-# Compile and watch changes to React component. This will open localhost:8000
-npm run build:watch
+# Start client with hot reload on port 3000
+npm run start
 ```
 
-## All Available Custom Script
+### List All Available Custom Script
 ```bash
 npm run
 ```
 
-## Compile for Production
+### Build Client for Production
 To compile the React component in production mode, type
-```
+```bash
 npm run build
 ```
-This command will build app.bundle.js, vendor.bundle.js and their corresponding source maps.
-I compile it separately into two files, app.bundle.js is for our react front end code and vendor.bundle.js is for the other front end libraries. Find out more in the ```webpack.config.js```.
+
+## Client: Create React App
+The React setup is bootstrapped with Create React App. Locally it serves public/index.html, and creates a bundle with src/index.jsx as the entry.
+
+Locally it is running on port 3000, and proxies API calls through localhost:4000.
+
+In production build it creates the bundle along with an injected index.html in build/, and can be served statically.
+
+## Server: JSON Server
+This project uses JSON server to fulfill the API portion with a single JSON file.
+
+Locally it let Create React App to serve the client, allowing for hot reload to happen.
+
+In production we pick up the static assets built by `npm run build`, and serve them through the same backend port (4000).
 
 ## Deployment
 I deploy the application with docker, and is configured by `now.json`
@@ -41,7 +53,7 @@ I deploy the application with docker, and is configured by `now.json`
 # Build the image
 docker build -t {SOME_TAG} .
 # Run the container with exposing port 5000
-docker run -p 5000:3000 {SOME_TAG}
+docker run -p 5000:4000 {SOME_TAG}
 ```
 
 

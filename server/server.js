@@ -1,24 +1,20 @@
 const express = require('express');
 const jsonServer = require('json-server');
-// const server = jsonServer.create();
-const server = express();
-const path = require('path')
-const router = jsonServer.router(path.join(__dirname, 'vehicles.json'))
-// const middlewares = jsonServer.defaults();
-const port = process.env.PORT || 3000;
+const path = require('path');
 
-server.use('/api/v1', router);
+const app = express();
+const router = jsonServer.router(path.join(__dirname, 'vehicles.json'));
+const port = process.env.PORT || 4000;
 
-// server.use(middlewares);
-server.use(express.static(path.join(__dirname, '/../public/')));
+// Route API calls to JSON server
+app.use('/api/v1', router);
 
-server.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname+'/../public/index.html'));
-});
+// Serve static files and handle React routing in production.
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../build')));
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../build', 'index.html'));
+  });
+}
 
-// Add this before server.use(router)
-// server.use(jsonServer.rewriter({
-//   '/api/v1/*': '/$1'
-// }))
-
-server.listen(port);
+app.listen(port, () => console.log(`Listening on port ${port}`));

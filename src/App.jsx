@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
-import ReactDOM from 'react-dom';
 import {Button, Container, Header, Icon, Menu} from 'semantic-ui-react'
 
 import VehicleList from './VehicleList.jsx';
 
-class App extends Component {
+export class App extends Component {
   render() {
     return (
       <Container style={{ padding: '2em 0em' }}>
@@ -29,5 +28,3 @@ class App extends Component {
     )
   };
 }
-
-ReactDOM.render(<App />, document.getElementById('contents')); // Render the component inside the content Node

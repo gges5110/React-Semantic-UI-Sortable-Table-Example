@@ -6,8 +6,6 @@
     { "src": "package.json", "use": "@now/static-build" }
   ],
   "routes": [
-    {"src": "./app.bundle.js", "dest": "/static/app.bundle.js"},
-    {"src": "./vendor.bundle.js", "dest": "/static/vendor.bundle.js"},
     { "src": "/api/v1/(.*)", "dest": "server/server.js" }
   ],
   "version": 2

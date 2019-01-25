@@ -1,32 +1,285 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`VehicleFilter should render correctly in "debug" mode 1`] = `
-<Form
-  as="form"
->
-  <FormGroup>
-    <FormField>
-      <Popup
-        content=""
-        keepInViewPort={true}
-        on="click"
-        open={false}
-        position="right center"
-        trigger={
-          <FormInput
-            as={[Function]}
-            control={[Function]}
-            error={false}
-            icon="search"
-            label="Filter"
-            name="filter"
-            onChange={[Function]}
-            placeholder="Enter the filter."
-            value=""
+ShallowWrapper {
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <VehicleFilter
+    debug={true}
+    filter=""
+    onSubmitFilter={[Function]}
+    totalCount={100}
+  />,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "checkPropTypes": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateError": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "class",
+    "props": Object {
+      "as": "form",
+      "children": <FormGroup>
+        <FormField>
+          <Popup
+            content=""
+            keepInViewPort={true}
+            on="click"
+            open={false}
+            position="right center"
+            trigger={
+              <FormInput
+                as={[Function]}
+                control={[Function]}
+                error={false}
+                icon="search"
+                label="Filter"
+                name="filter"
+                onChange={[Function]}
+                placeholder="Enter the filter."
+                value=""
+              />
+            }
           />
-        }
-      />
-    </FormField>
-  </FormGroup>
-</Form>
+        </FormField>
+      </FormGroup>,
+    },
+    "ref": null,
+    "rendered": Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "function",
+      "props": Object {
+        "children": <FormField>
+          <Popup
+            content=""
+            keepInViewPort={true}
+            on="click"
+            open={false}
+            position="right center"
+            trigger={
+              <FormInput
+                as={[Function]}
+                control={[Function]}
+                error={false}
+                icon="search"
+                label="Filter"
+                name="filter"
+                onChange={[Function]}
+                placeholder="Enter the filter."
+                value=""
+              />
+            }
+          />
+        </FormField>,
+      },
+      "ref": null,
+      "rendered": Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "function",
+        "props": Object {
+          "children": <Popup
+            content=""
+            keepInViewPort={true}
+            on="click"
+            open={false}
+            position="right center"
+            trigger={
+              <FormInput
+                as={[Function]}
+                control={[Function]}
+                error={false}
+                icon="search"
+                label="Filter"
+                name="filter"
+                onChange={[Function]}
+                placeholder="Enter the filter."
+                value=""
+              />
+            }
+          />,
+        },
+        "ref": null,
+        "rendered": Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "class",
+          "props": Object {
+            "content": "",
+            "keepInViewPort": true,
+            "on": "click",
+            "open": false,
+            "position": "right center",
+            "trigger": <FormInput
+              as={[Function]}
+              control={[Function]}
+              error={false}
+              icon="search"
+              label="Filter"
+              name="filter"
+              onChange={[Function]}
+              placeholder="Enter the filter."
+              value=""
+            />,
+          },
+          "ref": null,
+          "rendered": null,
+          "type": [Function],
+        },
+        "type": [Function],
+      },
+      "type": [Function],
+    },
+    "type": [Function],
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "class",
+      "props": Object {
+        "as": "form",
+        "children": <FormGroup>
+          <FormField>
+            <Popup
+              content=""
+              keepInViewPort={true}
+              on="click"
+              open={false}
+              position="right center"
+              trigger={
+                <FormInput
+                  as={[Function]}
+                  control={[Function]}
+                  error={false}
+                  icon="search"
+                  label="Filter"
+                  name="filter"
+                  onChange={[Function]}
+                  placeholder="Enter the filter."
+                  value=""
+                />
+              }
+            />
+          </FormField>
+        </FormGroup>,
+      },
+      "ref": null,
+      "rendered": Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "function",
+        "props": Object {
+          "children": <FormField>
+            <Popup
+              content=""
+              keepInViewPort={true}
+              on="click"
+              open={false}
+              position="right center"
+              trigger={
+                <FormInput
+                  as={[Function]}
+                  control={[Function]}
+                  error={false}
+                  icon="search"
+                  label="Filter"
+                  name="filter"
+                  onChange={[Function]}
+                  placeholder="Enter the filter."
+                  value=""
+                />
+              }
+            />
+          </FormField>,
+        },
+        "ref": null,
+        "rendered": Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "function",
+          "props": Object {
+            "children": <Popup
+              content=""
+              keepInViewPort={true}
+              on="click"
+              open={false}
+              position="right center"
+              trigger={
+                <FormInput
+                  as={[Function]}
+                  control={[Function]}
+                  error={false}
+                  icon="search"
+                  label="Filter"
+                  name="filter"
+                  onChange={[Function]}
+                  placeholder="Enter the filter."
+                  value=""
+                />
+              }
+            />,
+          },
+          "ref": null,
+          "rendered": Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "class",
+            "props": Object {
+              "content": "",
+              "keepInViewPort": true,
+              "on": "click",
+              "open": false,
+              "position": "right center",
+              "trigger": <FormInput
+                as={[Function]}
+                control={[Function]}
+                error={false}
+                icon="search"
+                label="Filter"
+                name="filter"
+                onChange={[Function]}
+                placeholder="Enter the filter."
+                value=""
+              />,
+            },
+            "ref": null,
+            "rendered": null,
+            "type": [Function],
+          },
+          "type": [Function],
+        },
+        "type": [Function],
+      },
+      "type": [Function],
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+        "legacyContextMode": "parent",
+        "lifecycles": Object {
+          "componentDidUpdate": Object {
+            "onSetState": true,
+          },
+          "getChildContext": Object {
+            "calledByRenderer": false,
+          },
+          "getDerivedStateFromProps": true,
+          "getSnapshotBeforeUpdate": true,
+          "setState": Object {
+            "skipsComponentDidUpdateOnNullish": true,
+          },
+        },
+      },
+    },
+  },
+}
 `;
