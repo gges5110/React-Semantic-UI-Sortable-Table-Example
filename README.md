@@ -6,7 +6,7 @@ An example for React Semantic UI sortable table.
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/a5f2bc2a9a8944549c95a17de5d863e9)](https://www.codacy.com/app/gges5110/React-Semantic-UI-Sortable-Table-Example?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=gges5110/React-Semantic-UI-Sortable-Table-Example&amp;utm_campaign=Badge_Grade)
 
 ## Prerequisite
-Node.js runtime environment.
+Node.js runtime environment of 10.16.0.
 
 ## Quick Start
 ```bash
