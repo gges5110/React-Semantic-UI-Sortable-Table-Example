@@ -15,6 +15,7 @@
     "coveralls": "npm run coverage && cat ./coverage/lcov.info | node node_modules/.bin/coveralls",
     "eject": "react-scripts eject",
     "now-build": "npm run build && mv build dist",
+    "prettier": "prettier --single-quote --trailing-comma es5 --write \"src/**/*.{js,jsx}\"",
     "start": "react-scripts start",
     "start:server": "node server/server.js",
     "test": "react-scripts test --env=jsdom"

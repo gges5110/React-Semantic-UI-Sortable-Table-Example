@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Form, Popup} from 'semantic-ui-react';
+import { Form, Popup } from 'semantic-ui-react';
 
-const regex = new RegExp("^[a-zA-Z0-9 ]+$");
+const regex = new RegExp('^[a-zA-Z0-9 ]+$');
 
 export class VehicleFilter extends React.Component {
   constructor() {
@@ -14,11 +14,11 @@ export class VehicleFilter extends React.Component {
     this.handleOnChange = this.handleOnChange.bind(this);
   }
 
-  handleOnChange(event, {name, value}) {
+  handleOnChange(event, { name, value }) {
     if (value !== '' && !regex.test(value)) {
-      this.setState({[name]: value, filterValid: false});
+      this.setState({ [name]: value, filterValid: false });
     } else {
-      this.setState({[name]: value, filterValid: true});
+      this.setState({ [name]: value, filterValid: true });
       this.props.onSubmitFilter(value);
     }
   }
@@ -29,7 +29,7 @@ export class VehicleFilter extends React.Component {
     if (!this.state.filterValid) {
       popupMessage = 'Invalid character.';
     } else if (this.props.totalCount === 0) {
-      popupMessage = 'No results found.'
+      popupMessage = 'No results found.';
     }
 
     return (
@@ -37,25 +37,27 @@ export class VehicleFilter extends React.Component {
         <Form.Group>
           <Form.Field>
             <Popup
-              trigger={<Form.Input
-                placeholder='Enter the filter.'
-                name='filter'
-                value={filter}
-                error={!this.state.filterValid}
-                label='Filter'
-                onChange={this.handleOnChange}
-                icon='search'
-                loading={this.props.loading}
-              />}
+              trigger={
+                <Form.Input
+                  placeholder="Enter the filter."
+                  name="filter"
+                  value={filter}
+                  error={!this.state.filterValid}
+                  label="Filter"
+                  onChange={this.handleOnChange}
+                  icon="search"
+                  loading={this.props.loading}
+                />
+              }
               content={popupMessage}
-              on='click'
+              on="click"
               open={!this.state.filterValid || this.props.totalCount === 0}
-              position='right center'
+              position="right center"
             />
           </Form.Field>
         </Form.Group>
       </Form>
-    )
+    );
   }
 }
 

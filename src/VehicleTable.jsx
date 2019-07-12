@@ -1,18 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Table, Pagination} from 'semantic-ui-react'
+import { Table, Pagination } from 'semantic-ui-react';
 
-import {VehiclePageSizeSelect} from './VehiclePageSizeSelect.jsx';
-import {VehicleRow} from "./VehicleRow.jsx";
-import {VehicleTableHeader} from "./VehicleTableHeader.jsx";
+import { VehiclePageSizeSelect } from './VehiclePageSizeSelect.jsx';
+import { VehicleRow } from './VehicleRow.jsx';
+import { VehicleTableHeader } from './VehicleTableHeader.jsx';
 
-export const VehicleTable = (props) => {
+export const VehicleTable = props => {
   if (!props.vehicles) {
-    return <React.Fragment/>;
+    return <React.Fragment />;
   }
-  const vehicleRows = props.vehicles.map(
-    (vehicle, index) => <VehicleRow key={index} vehicle={vehicle} addFavorite={props.addFavorite} />
-  );
+  const vehicleRows = props.vehicles.map((vehicle, index) => (
+    <VehicleRow key={index} vehicle={vehicle} addFavorite={props.addFavorite} />
+  ));
   return (
     <React.Fragment>
       <VehiclePageSizeSelect
@@ -20,20 +20,18 @@ export const VehicleTable = (props) => {
         onChangeLimit={props.onChangeLimit}
       />
       Total count: {props.totalCount}.
-      <Table celled selectable sortable >
+      <Table celled selectable sortable>
         <VehicleTableHeader
           column={props.column}
           direction={props.direction}
           handleSort={props.handleSort}
         />
 
-        <Table.Body>
-          {vehicleRows}
-        </Table.Body>
+        <Table.Body>{vehicleRows}</Table.Body>
 
         <Table.Footer>
           <Table.Row>
-            <Table.HeaderCell colSpan='8'>
+            <Table.HeaderCell colSpan="8">
               <Pagination
                 totalPages={props.totalPages}
                 activePage={props.currentPage}

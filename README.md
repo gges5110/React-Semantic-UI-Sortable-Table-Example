@@ -56,6 +56,14 @@ docker build -t {SOME_TAG} .
 docker run -p 5000:4000 {SOME_TAG}
 ```
 
+# Dev Guide
+
+## Code Formatting 
+We use prettier to format our code.
+```bash
+npm run prettier
+```
+
 
 ## Server APIs
 

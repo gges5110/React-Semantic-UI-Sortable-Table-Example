@@ -1,10 +1,10 @@
 import React from 'react';
-import {Divider, Segment} from 'semantic-ui-react';
+import { Divider, Segment } from 'semantic-ui-react';
 
-import {VehicleTable} from './VehicleTable.jsx';
-import {VehicleFilter} from './VehicleFilter.jsx';
+import { VehicleTable } from './VehicleTable.jsx';
+import { VehicleFilter } from './VehicleFilter.jsx';
 
-const queryParams = ['_limit','_order','_sort','q','_page'];
+const queryParams = ['_limit', '_order', '_sort', 'q', '_page'];
 
 export default class VehicleList extends React.Component {
   constructor() {
@@ -18,7 +18,7 @@ export default class VehicleList extends React.Component {
       q: '',
       totalCount: 0,
       loading: false,
-     };
+    };
     this.loadData = this.loadData.bind(this);
     this.onChangeLimit = this.onChangeLimit.bind(this);
     this.onSubmitFilter = this.onSubmitFilter.bind(this);
@@ -45,12 +45,6 @@ export default class VehicleList extends React.Component {
       newOrder = 'asc';
     }
 
-    this.setState({
-      _sort: clickedColumn,
-      _page: 1,
-      _order: newOrder,
-    });
-
     this.loadData({
       _sort: clickedColumn,
       _page: 1,
@@ -64,22 +58,19 @@ export default class VehicleList extends React.Component {
 
   onChangeLimit(event, data) {
     if (data.value !== this.state._limit) {
-      this.setState({ _limit: data.value, _page: 1  });
-      this.loadData({ _limit: data.value, _page: 1  });
+      this.loadData({ _limit: data.value, _page: 1 });
     }
   }
 
   onSubmitFilter(filter) {
     if (filter !== this.state.q) {
-      this.setState({ q: filter, _page: 1, loading: true });
       this.loadData({ q: filter, _page: 1 });
     }
   }
 
   onChangePage(event, data) {
-    const {activePage} = data;
+    const { activePage } = data;
     if (activePage !== this.state._page) {
-      this.setState({ _page: activePage });
       this.loadData({ _page: activePage });
     }
   }
@@ -102,20 +93,22 @@ export default class VehicleList extends React.Component {
           }
 
           this.setState({ vehicles: vehicles });
-        })
+        });
       } else {
         response.json().then(error => {
           console.log(`Failed to load data: ${error.message}`);
         });
       }
-    })
+    });
   }
 
   loadData(params) {
-    const current = this.state;
+    const newState = Object.assign({}, this.state, params, { loading: false });
+    this.setState({ loading: true });
+
     queryParams.forEach(function(element) {
       if (!(element in params)) {
-        params[element] = current[element];
+        params[element] = newState[element];
       }
     });
 
@@ -126,7 +119,7 @@ export default class VehicleList extends React.Component {
 
     // Make a request without limit first to get the total number of data.
     let totalCountQuery = '';
-    if (params.q !== "") {
+    if (params.q !== '') {
       totalCountQuery = `q=${params.q}`;
     }
 
@@ -134,53 +127,53 @@ export default class VehicleList extends React.Component {
       if (response.ok) {
         response.json().then(data => {
           this.setState({ totalCount: data.length });
-        })
+        });
       } else {
         response.json().then(error => {
           console.log(`Failed to load data: ${error.message}`);
         });
       }
-      this.setState({loading: false});
+      this.setState(newState);
     });
 
     fetch('/api/v1/vehicles?' + query).then(response => {
       if (response.ok) {
         response.json().then(data => {
           this.setState({ vehicles: data });
-        })
+        });
       } else {
         response.json().then(error => {
           console.log(`Failed to load data: ${error.message}`);
         });
       }
-      this.setState({loading: false});
-    })
+      this.setState(newState);
+    });
   }
 
   render() {
     return (
       <Segment>
         <VehicleFilter
-          filter = { this.state.q }
-          totalCount = {this.state.totalCount }
-          onSubmitFilter = { this.onSubmitFilter }
-          loading = { this.state.loading }
+          filter={this.state.q}
+          totalCount={this.state.totalCount}
+          onSubmitFilter={this.onSubmitFilter}
+          loading={this.state.loading}
         />
-      <Divider/>
+        <Divider />
         <VehicleTable
-          vehicles = { this.state.vehicles }
-          totalCount = {this.state.totalCount }
-          totalPages = { Math.ceil(this.state.totalCount / this.state._limit) }
-          currentPage = { this.state._page }
-          onChangePage = { this.onChangePage }
-          addFavorite = { this.addFavorite }
-          column = { this.state._sort }
-          direction = { this.directionConverter(this.state._order) }
-          handleSort = { this.handleSort }
-          onChangeLimit = { this.onChangeLimit }
-          limit = { this.state._limit.toString() }
+          vehicles={this.state.vehicles}
+          totalCount={this.state.totalCount}
+          totalPages={Math.ceil(this.state.totalCount / this.state._limit)}
+          currentPage={this.state._page}
+          onChangePage={this.onChangePage}
+          addFavorite={this.addFavorite}
+          column={this.state._sort}
+          direction={this.directionConverter(this.state._order)}
+          handleSort={this.handleSort}
+          onChangeLimit={this.onChangeLimit}
+          limit={this.state._limit.toString()}
         />
       </Segment>
-    )
+    );
   }
 }
