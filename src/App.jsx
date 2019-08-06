@@ -22,7 +22,7 @@ export class App extends Component {
 
             <Button
               color="facebook"
-              style={{marginLeft: 16}}
+              style={{ marginLeft: 16 }}
               as="a"
               href="https://github.com/gges5110/React-Semantic-UI-Sortable-Table-Example"
             >

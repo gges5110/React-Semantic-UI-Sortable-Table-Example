@@ -1,6 +1,6 @@
 import React from 'react';
 import { Divider, Segment } from 'semantic-ui-react';
-
+import debounce from 'lodash.debounce';
 import { VehicleTable } from './VehicleTable.jsx';
 import { VehicleFilter } from './VehicleFilter.jsx';
 
@@ -19,9 +19,14 @@ export default class VehicleList extends React.Component {
       totalCount: 0,
       loading: false,
     };
+    this.onSubmitFilter = debounce(this.onSubmitFilter, 800);
   }
 
-  directionConverter(order) {
+  componentDidMount() {
+    this.loadData({});
+  }
+
+  static directionConverter(order) {
     if (order === 'asc') {
       return 'ascending';
     } else if (order === 'desc') {
@@ -31,7 +36,7 @@ export default class VehicleList extends React.Component {
     }
   }
 
-  handleSort = (clickedColumn) => {
+  handleSort = clickedColumn => {
     const { _sort, _order } = this.state;
 
     let newOrder = _order === 'asc' ? 'desc' : 'asc';
@@ -46,17 +51,13 @@ export default class VehicleList extends React.Component {
     });
   };
 
-  componentDidMount() {
-    this.loadData({});
-  }
-
   onChangeLimit = (event, data) => {
     if (data.value !== this.state._limit) {
       this.loadData({ _limit: data.value, _page: 1 });
     }
   };
 
-  onSubmitFilter = (filter) => {
+  onSubmitFilter = filter => {
     if (filter !== this.state.q) {
       this.loadData({ q: filter, _page: 1 });
     }
@@ -69,7 +70,7 @@ export default class VehicleList extends React.Component {
     }
   };
 
-  addFavorite = (vehicle) => {
+  addFavorite = vehicle => {
     vehicle.favorite = !vehicle.favorite;
     fetch(`/api/v1/vehicles/${vehicle.id}`, {
       method: 'PUT',
@@ -78,15 +79,14 @@ export default class VehicleList extends React.Component {
     }).then(response => {
       if (response.ok) {
         response.json().then(data => {
-          const vehicles = this.state.vehicles.slice();
-          for (let i = 0; i < vehicles.length; ++i) {
-            if (vehicles[i].id === data.id) {
-              vehicles[i] = data;
-              break;
-            }
-          }
-
-          this.setState({ vehicles: vehicles });
+          const index = this.state.vehicles.findIndex(
+            vehicle => vehicle.id === data.id
+          );
+          this.setState({
+            vehicles: Object.assign([...this.state.vehicles], {
+              [index]: data,
+            }),
+          });
         });
       } else {
         response.json().then(error => {
@@ -96,7 +96,7 @@ export default class VehicleList extends React.Component {
     });
   };
 
-  loadData = (params) => {
+  loadData = params => {
     const newState = Object.assign({}, this.state, params, { loading: false });
     this.setState({ loading: true });
 
@@ -138,7 +138,9 @@ export default class VehicleList extends React.Component {
               console.log(`Failed to load data: ${error.message}`);
             });
           }
-          const newState = Object.assign({}, this.state, params, { loading: false });
+          const newState = Object.assign({}, this.state, params, {
+            loading: false,
+          });
           this.setState(newState);
         });
       });
@@ -163,7 +165,7 @@ export default class VehicleList extends React.Component {
           onChangePage={this.onChangePage}
           addFavorite={this.addFavorite}
           column={this.state._sort}
-          direction={this.directionConverter(this.state._order)}
+          direction={VehicleList.directionConverter(this.state._order)}
           handleSort={this.handleSort}
           onChangeLimit={this.onChangeLimit}
           limit={this.state._limit.toString()}

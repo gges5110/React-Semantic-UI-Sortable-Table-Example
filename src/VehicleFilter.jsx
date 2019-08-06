@@ -5,23 +5,22 @@ import { Form, Popup } from 'semantic-ui-react';
 const regex = new RegExp('^[a-zA-Z0-9 ]+$');
 
 export class VehicleFilter extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       filter: '',
       filterValid: true,
     };
-    this.handleOnChange = this.handleOnChange.bind(this);
   }
 
-  handleOnChange(event, { name, value }) {
+  handleOnChange = (event, { name, value }) => {
     if (value !== '' && !regex.test(value)) {
       this.setState({ [name]: value, filterValid: false });
     } else {
       this.setState({ [name]: value, filterValid: true });
       this.props.onSubmitFilter(value);
     }
-  }
+  };
 
   render() {
     const { filter } = this.state;

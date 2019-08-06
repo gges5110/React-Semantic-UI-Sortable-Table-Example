@@ -32,11 +32,11 @@ npm run build
 ```
 
 ## Client: Create React App
-The React setup is bootstrapped with Create React App. Locally it serves public/index.html, and creates a bundle with src/index.jsx as the entry.
+The React setup is bootstrapped with Create React App. Locally it serves `public/index.html`, and creates a bundle with `src/index.jsx` as the entry.
 
-Locally it is running on port 3000, and proxies API calls through localhost:4000.
+Locally it is running on port `3000`, and proxies API calls through `localhost:4000`.
 
-In production build it creates the bundle along with an injected index.html in build/, and can be served statically.
+In production build it creates the bundle along with an injected `index.html` in `build/`, and can be served statically.
 
 ## Server: JSON Server
 This project uses JSON server to fulfill the API portion with a single JSON file.
