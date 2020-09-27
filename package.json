@@ -11,14 +11,14 @@
   "main": "server/server.js",
   "scripts": {
     "build": "react-scripts build",
-    "coverage": "react-scripts test --env=jsdom --coverage",
+    "coverage": "CI=true react-scripts test --env=jest-environment-jsdom-fourteen --coverage",
     "coveralls": "npm run coverage && cat ./coverage/lcov.info | node node_modules/.bin/coveralls",
     "eject": "react-scripts eject",
     "now-build": "npm run build && mv build dist",
     "prettier": "prettier --single-quote --trailing-comma es5 --write \"src/**/*.{js,jsx}\"",
     "start": "react-scripts start",
     "start:server": "node server/server.js",
-    "test": "react-scripts test --env=jsdom"
+    "test": "react-scripts test --env=jest-environment-jsdom-fourteen"
   },
   "browserslist": [
     ">0.2%",
@@ -30,11 +30,19 @@
     "express": "^4.17.1",
     "json-server": "^0.15.0",
     "lodash.debounce": "^4.0.8",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
     "semantic-ui-react": "^0.87.3"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.0.4",
+    "@testing-library/user-event": "^12.1.6",
+    "@types/fetch-mock": "^7.3.3",
+    "@types/jest": "^26.0.14",
+    "@types/lodash.debounce": "^4.0.6",
+    "@types/react": "^16.9.49",
+    "@types/react-dom": "^16.9.8",
     "coveralls": "^3.0.5",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
@@ -43,7 +51,8 @@
     "isomorphic-fetch": "^2.2.1",
     "prettier": "1.18.2",
     "prop-types": "^15.7.2",
-    "react-scripts": "^3.0.1"
+    "react-scripts": "^3.4.1",
+    "typescript": "^4.0.3"
   },
   "engines": {
     "node": "10.16.0"

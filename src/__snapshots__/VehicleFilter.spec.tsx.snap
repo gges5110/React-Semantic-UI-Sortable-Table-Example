@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`VehicleFilter renders 1`] = `
+<div>
+  <form
+    class="ui form"
+  >
+    <div
+      class="fields"
+    >
+      <div
+        class="field"
+      >
+        <div
+          class="field"
+        >
+          <label>
+            Filter
+          </label>
+          <div
+            class="ui icon input"
+          >
+            <input
+              name="filter"
+              placeholder="Enter the filter."
+              type="text"
+              value=""
+            />
+            <i
+              aria-hidden="true"
+              class="search icon"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+`;
