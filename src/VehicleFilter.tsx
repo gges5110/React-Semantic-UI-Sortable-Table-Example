@@ -1,20 +1,41 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Form, Popup } from 'semantic-ui-react';
+import React from "react";
+import PropTypes from "prop-types";
+import { Form, Popup } from "semantic-ui-react";
 
-const regex = new RegExp('^[a-zA-Z0-9 ]+$');
+const regex = new RegExp("^[a-zA-Z0-9 ]+$");
 
-export class VehicleFilter extends React.Component {
-  constructor(props) {
+interface VehicleFilterProps {
+  totalCount: number;
+  loading?: boolean;
+  onSubmitFilter(value: string): void;
+}
+
+interface VehicleFilterState {
+  [index: string]: any;
+  filter: string;
+  filterValid: boolean;
+}
+
+export class VehicleFilter extends React.Component<
+  VehicleFilterProps,
+  VehicleFilterState
+> {
+  static propTypes = {
+    onSubmitFilter: PropTypes.func.isRequired,
+    filter: PropTypes.string.isRequired,
+    totalCount: PropTypes.number.isRequired
+  };
+
+  constructor(props: VehicleFilterProps) {
     super(props);
     this.state = {
-      filter: '',
-      filterValid: true,
+      filter: "",
+      filterValid: true
     };
   }
 
-  handleOnChange = (event, { name, value }) => {
-    if (value !== '' && !regex.test(value)) {
+  handleOnChange = (event: any, { name, value }: any) => {
+    if (value !== "" && !regex.test(value)) {
       this.setState({ [name]: value, filterValid: false });
     } else {
       this.setState({ [name]: value, filterValid: true });
@@ -24,11 +45,11 @@ export class VehicleFilter extends React.Component {
 
   render() {
     const { filter } = this.state;
-    let popupMessage = '';
+    let popupMessage = "";
     if (!this.state.filterValid) {
-      popupMessage = 'Invalid character.';
+      popupMessage = "Invalid character.";
     } else if (this.props.totalCount === 0) {
-      popupMessage = 'No results found.';
+      popupMessage = "No results found.";
     }
 
     return (
@@ -59,9 +80,3 @@ export class VehicleFilter extends React.Component {
     );
   }
 }
-
-VehicleFilter.propTypes = {
-  onSubmitFilter: PropTypes.func.isRequired,
-  filter: PropTypes.string.isRequired,
-  totalCount: PropTypes.number.isRequired,
-};
