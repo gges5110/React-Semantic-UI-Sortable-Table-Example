@@ -8,3 +8,5 @@
 
 build/*
 !public/index.html
+
+.vercel
