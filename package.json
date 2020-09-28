@@ -32,7 +32,7 @@
     "lodash.debounce": "^4.0.8",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
-    "semantic-ui-react": "^0.87.3"
+    "semantic-ui-react": "^1.0.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "5.11.4",
