@@ -28,7 +28,7 @@
   ],
   "dependencies": {
     "express": "^4.17.1",
-    "json-server": "^0.15.0",
+    "json-server": "^0.16.0",
     "lodash.debounce": "^4.0.8",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
