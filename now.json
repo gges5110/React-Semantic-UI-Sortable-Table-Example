@@ -1,5 +1,9 @@
 {
+  "version": 2,
   "public": true,
+  "github": {
+    "enabled": false
+  },
   "alias": "react-semantic-ui-sortable-table-example",
   "builds": [
     { "src": "server/server.js", "use": "@now/node-server" },
@@ -7,6 +11,5 @@
   ],
   "routes": [
     { "src": "/api/v1/(.*)", "dest": "server/server.js" }
-  ],
-  "version": 2
+  ]
 }

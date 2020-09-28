@@ -7,7 +7,7 @@ import userEvent from "@testing-library/user-event";
 
 describe("VehicleList", () => {
   beforeEach(() => {
-    fetchMock.mock("/api/v1/vehicles", [
+    fetchMock.mock("*", [
       {
         id: 3,
         make: "Mazda",
@@ -19,36 +19,10 @@ describe("VehicleList", () => {
         favorite: false
       }
     ]);
-    fetchMock.mock(
-      "/api/v1/vehicles",
-      [
-        {
-          id: 3,
-          make: "Mazda",
-          model: "B-Series",
-          year: 1987,
-          package: "SE",
-          fuelType: "Diesel",
-          transmission: "Manual",
-          favorite: false
-        }
-      ],
-      {
-        method: "GET",
-        query: {
-          _limit: "10",
-          _order: "null",
-          _sort: "id",
-          _page: "1"
-        },
-        overwriteRoutes: false
-      }
-    );
   });
 
   afterEach(() => {
     fetchMock.restore();
-    setTimeout(() => {}, 1000);
   });
 
   it("should render correctly", async () => {
