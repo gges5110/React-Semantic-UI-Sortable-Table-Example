@@ -46,7 +46,7 @@
     "coveralls": "3.1.0",
     "enzyme": "3.11.0",
     "enzyme-adapter-react-16": "1.15.5",
-    "enzyme-to-json": "3.4.0",
+    "enzyme-to-json": "3.6.1",
     "fetch-mock": "9.10.7",
     "isomorphic-fetch": "2.2.1",
     "prettier": "1.18.2",
