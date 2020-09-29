@@ -1,19 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Divider, Segment } from "semantic-ui-react";
-import debounce from "lodash.debounce";
+
 import { VehicleTable } from "./VehicleTable";
 import { VehicleFilter } from "./VehicleFilter";
 
-const queryParams = ["_limit", "_order", "_sort", "q", "_page"];
+interface Pagination {
+  limit: number;
+  page: number;
+}
 
 interface VehicleListState {
-  _sort: string;
-  _order: "desc" | "asc" | null;
-  _limit: number;
-  _page: number;
-  q: string;
   totalCount: number;
-  loading: boolean;
   vehicles: Vehicle[];
 }
 
@@ -28,80 +25,95 @@ export interface Vehicle {
   transmission: string;
 }
 
-interface Params {
-  [index: string]: any;
-  _sort: string;
-  _order: "desc" | "asc";
-  _limit: number;
-  _page: number;
-  q: string;
+interface SortField {
+  sortColumn: string;
+  sortOrder?: "descending" | "ascending";
 }
 
-export class VehicleList extends React.Component<{}, VehicleListState> {
-  constructor(props: {}) {
-    super(props);
-    this.state = {
-      vehicles: [],
-      _sort: "id",
-      _page: 1,
-      _order: null,
-      _limit: 10,
-      q: "",
-      totalCount: 0,
-      loading: false
-    } as VehicleListState;
-    this.onSubmitFilter = debounce(this.onSubmitFilter, 800);
-  }
+export const VehicleList: React.FC = () => {
+  const [state, setState] = useState<VehicleListState>({
+    vehicles: [],
+    totalCount: 0
+  });
 
-  componentDidMount() {
-    this.loadData({});
-  }
+  const [loading, setLoading] = useState<boolean>(false);
+  const [pagination, setPagination] = useState<Pagination>({
+    page: 1,
+    limit: 10
+  });
+  const [filter, setFilter] = useState<string>("");
+  const [sort, setSort] = useState<SortField>({ sortColumn: "id" });
 
-  static directionConverter(order: "asc" | "desc" | null) {
-    if (order === "asc") {
-      return "ascending";
-    } else if (order === "desc") {
-      return "descending";
-    } else {
-      return undefined;
-    }
-  }
+  const loadData = () => {
+    setLoading(true);
 
-  handleSort = (clickedColumn: string) => {
-    const { _sort, _order } = this.state;
+    const query = constructQuery();
 
-    let newOrder: "desc" | "asc" = _order === "asc" ? "desc" : "asc";
-    if (_sort !== clickedColumn) {
-      newOrder = "asc";
+    // Make a request without limit first to get the total number of data.
+    let totalCountQuery = "";
+    if (filter !== "") {
+      totalCountQuery = `q=${encodeURIComponent(filter)}`;
     }
 
-    this.loadData({
-      _sort: clickedColumn,
-      _page: 1,
-      _order: newOrder
-    });
+    Promise.all([
+      fetch(`/api/v1/vehicles?${totalCountQuery}`),
+      fetch(`/api/v1/vehicles?${query}`)
+    ])
+      .then(values => {
+        Promise.all([values[0].json(), values[1].json()]).then(data => {
+          setState({ totalCount: data[0].length, vehicles: data[1] });
+          setLoading(false);
+        });
+      })
+      .catch(error => {
+        console.log(`Failed to load data: ${error.message}`);
+      });
   };
 
-  onChangeLimit = (event: any, data: any) => {
-    if (data.value !== this.state._limit) {
-      this.loadData({ _limit: data.value, _page: 1 });
+  useEffect(() => {
+    loadData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    filter,
+    sort.sortOrder,
+    sort.sortColumn,
+    pagination.page,
+    pagination.limit
+  ]);
+
+  const handleSort = (clickedColumn: string) => {
+    const { sortColumn, sortOrder } = sort;
+
+    let newOrder: "ascending" | "descending" =
+      sortOrder === "ascending" ? "descending" : "ascending";
+    if (sortColumn !== clickedColumn) {
+      newOrder = "ascending";
+    }
+
+    setPagination({ ...pagination, page: 1 });
+    setSort({ sortColumn: clickedColumn, sortOrder: newOrder });
+  };
+
+  const onChangeLimit = (limit: number) => {
+    if (limit !== pagination.limit) {
+      setPagination({ limit, page: 1 });
     }
   };
 
-  onSubmitFilter = (filter: string) => {
-    if (filter !== this.state.q) {
-      this.loadData({ q: filter, _page: 1 });
+  const onSubmitFilter = (value: string) => {
+    if (value !== filter) {
+      setFilter(value);
+      setPagination({ ...pagination, page: 1 });
     }
   };
 
-  onChangePage = (event: any, data: any) => {
-    const { activePage } = data;
-    if (activePage !== this.state._page) {
-      this.loadData({ _page: activePage });
+  const onChangePage = (page: number) => {
+    if (page !== pagination.page) {
+      setPagination({ ...pagination, page: page as number });
     }
   };
 
-  addFavorite = (vehicle: Vehicle) => {
+  const addFavorite = (vehicle: Vehicle) => {
     vehicle.favorite = !vehicle.favorite;
     fetch(`/api/v1/vehicles/${vehicle.id}`, {
       method: "PUT",
@@ -110,11 +122,12 @@ export class VehicleList extends React.Component<{}, VehicleListState> {
     }).then(response => {
       if (response.ok) {
         response.json().then(data => {
-          const index = this.state.vehicles.findIndex(
+          const index = state.vehicles.findIndex(
             vehicle => vehicle.id === data.id
           );
-          this.setState({
-            vehicles: Object.assign([...this.state.vehicles], {
+          setState({
+            ...state,
+            vehicles: Object.assign([...state.vehicles], {
               [index]: data
             })
           });
@@ -127,81 +140,41 @@ export class VehicleList extends React.Component<{}, VehicleListState> {
     });
   };
 
-  loadData = (params: Partial<Params>) => {
-    const newState = Object.assign({}, this.state, params, { loading: false });
-    this.setState({ loading: true });
-
-    queryParams.forEach(function(element) {
-      if (!(element in params)) {
-        params[element] = newState[element];
-      }
-    });
-
-    const esc = encodeURIComponent;
-    const query = Object.keys(params)
-      .map(k => esc(k) + "=" + esc(params[k]))
-      .join("&");
-
-    // Make a request without limit first to get the total number of data.
-    let totalCountQuery = "";
-    if (params.q !== "") {
-      totalCountQuery = `q=${params.q}`;
+  const constructQuery = (): string => {
+    const params = [];
+    params.push(`_limit=${pagination.limit}`);
+    params.push(`_page=${pagination.page}`);
+    params.push(`q=${encodeURIComponent(filter)}`);
+    params.push(`_sort=${sort.sortColumn}`);
+    if (sort.sortOrder) {
+      params.push(`_order=${sort.sortOrder === "ascending" ? "asc" : "desc"}`);
     }
 
-    fetch(`/api/v1/vehicles?${totalCountQuery}`).then(response => {
-      if (response.ok) {
-        response.json().then(data => {
-          this.setState({ totalCount: data.length });
-        });
-      } else {
-        response.json().then(error => {
-          console.log(`Failed to load data: ${error.message}`);
-        });
-      }
-      this.setState(newState, () => {
-        fetch("/api/v1/vehicles?" + query).then(response => {
-          if (response.ok) {
-            response.json().then(data => {
-              this.setState({ vehicles: data });
-            });
-          } else {
-            response.json().then(error => {
-              console.log(`Failed to load data: ${error.message}`);
-            });
-          }
-          const newState = Object.assign({}, this.state, params, {
-            loading: false
-          });
-          this.setState(newState);
-        });
-      });
-    });
+    return params.join("&");
   };
 
-  render() {
-    return (
-      <Segment>
-        <VehicleFilter
-          filter={this.state.q}
-          totalCount={this.state.totalCount}
-          onSubmitFilter={this.onSubmitFilter}
-          loading={this.state.loading}
-        />
-        <Divider />
-        <VehicleTable
-          vehicles={this.state.vehicles}
-          totalCount={this.state.totalCount}
-          totalPages={Math.ceil(this.state.totalCount / this.state._limit)}
-          currentPage={this.state._page}
-          onChangePage={this.onChangePage}
-          addFavorite={this.addFavorite}
-          column={this.state._sort}
-          direction={VehicleList.directionConverter(this.state._order)}
-          handleSort={this.handleSort}
-          onChangeLimit={this.onChangeLimit}
-          limit={this.state._limit}
-        />
-      </Segment>
-    );
-  }
-}
+  return (
+    <Segment>
+      <VehicleFilter
+        filter={filter}
+        totalCount={state.totalCount}
+        onSubmitFilter={onSubmitFilter}
+        loading={loading}
+      />
+      <Divider />
+      <VehicleTable
+        vehicles={state.vehicles}
+        totalCount={state.totalCount}
+        totalPages={Math.ceil(state.totalCount / pagination.limit)}
+        currentPage={pagination.page}
+        onChangePage={onChangePage}
+        addFavorite={addFavorite}
+        column={sort.sortColumn}
+        direction={sort.sortOrder}
+        handleSort={handleSort}
+        onChangeLimit={onChangeLimit}
+        limit={pagination.limit}
+      />
+    </Segment>
+  );
+};

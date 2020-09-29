@@ -3,6 +3,8 @@ import { VehicleFilter } from "./VehicleFilter";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
+jest.mock("lodash.debounce", () => jest.fn(fn => fn));
+
 describe("VehicleFilter", () => {
   it("renders", () => {
     const filter = "";
@@ -56,5 +58,24 @@ describe("VehicleFilter", () => {
 
     expect(onSubmitFilter).toHaveBeenCalled();
     expect(onSubmitFilter.mock.calls).toHaveLength(5);
+  });
+
+  it("submits invalid", () => {
+    const filter = "";
+    const totalCount = 10;
+    const onSubmitFilter = jest.fn();
+
+    render(
+      <VehicleFilter
+        filter={filter}
+        totalCount={totalCount}
+        onSubmitFilter={onSubmitFilter}
+      />
+    );
+
+    userEvent.type(screen.getByRole("textbox"), "#");
+
+    expect(onSubmitFilter).not.toHaveBeenCalled();
+    waitFor(() => expect(screen.getByText("Invalid")).toBeInTheDocument());
   });
 });

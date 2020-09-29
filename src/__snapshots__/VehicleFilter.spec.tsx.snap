@@ -22,9 +22,8 @@ exports[`VehicleFilter renders 1`] = `
           >
             <input
               name="filter"
-              placeholder="Enter the filter."
+              placeholder="Enter a filter."
               type="text"
-              value=""
             />
             <i
               aria-hidden="true"

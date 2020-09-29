@@ -5,19 +5,20 @@ import { VehiclePageSizeSelect } from "./VehiclePageSizeSelect";
 import { VehicleTableHeader } from "./VehicleTableHeader";
 import { VehicleRow } from "./VehicleRow";
 import { Vehicle } from "./VehicleList";
+import { PaginationProps } from "semantic-ui-react/dist/commonjs/addons/Pagination/Pagination";
 
 interface VehicleTableProps {
   vehicles: Vehicle[];
   totalCount: number;
   totalPages: number;
   currentPage: number;
-  onChangePage(event: any, data: any): void;
-  addFavorite(vehicle: Vehicle): void;
   column?: string;
-  direction?: "ascending" | "descending";
-  handleSort(clickedColumn: string): void;
-  onChangeLimit(event: any, data: any): void;
   limit: number;
+  direction?: "ascending" | "descending";
+  onChangePage(page: number): void;
+  addFavorite(vehicle: Vehicle): void;
+  handleSort(clickedColumn: string): void;
+  onChangeLimit(limit: number): void;
 }
 
 export const VehicleTable: React.FC<VehicleTableProps> = ({
@@ -36,6 +37,13 @@ export const VehicleTable: React.FC<VehicleTableProps> = ({
   const vehicleRows = vehicles.map((vehicle, index) => (
     <VehicleRow key={index} vehicle={vehicle} addFavorite={addFavorite} />
   ));
+  const handleChangePage = (
+    event: React.MouseEvent<HTMLAnchorElement>,
+    { activePage }: PaginationProps
+  ) => {
+    onChangePage(activePage as number);
+  };
+
   return (
     <React.Fragment>
       <VehiclePageSizeSelect limit={limit} onChangeLimit={onChangeLimit} />
@@ -55,7 +63,7 @@ export const VehicleTable: React.FC<VehicleTableProps> = ({
               <Pagination
                 totalPages={totalPages}
                 activePage={currentPage}
-                onPageChange={onChangePage}
+                onPageChange={handleChangePage}
               />
             </Table.HeaderCell>
           </Table.Row>
