@@ -1,6 +1,7 @@
 import React from "react";
 import { VehicleTable } from "./VehicleTable";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 
 describe("VehicleTable", () => {
   it("should render correctly", () => {
@@ -66,5 +67,29 @@ describe("VehicleTable", () => {
         limit={10}
       />
     );
+  });
+
+  it("should change page", () => {
+    const onChangePageMock = jest.fn();
+
+    render(
+      <VehicleTable
+        totalCount={100}
+        totalPages={10}
+        currentPage={0}
+        onChangePage={onChangePageMock}
+        addFavorite={jest.fn()}
+        onChangeLimit={jest.fn()}
+        handleSort={jest.fn()}
+        vehicles={[]}
+        limit={10}
+      />
+    );
+
+    expect(screen.getByRole("navigation")).toBeInTheDocument();
+    expect(screen.getByRole("navigation").childElementCount).toEqual(11);
+    userEvent.click(screen.getByRole("navigation").children[1]);
+
+    expect(onChangePageMock).toHaveBeenCalledTimes(1);
   });
 });
