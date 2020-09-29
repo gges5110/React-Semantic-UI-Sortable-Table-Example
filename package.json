@@ -48,7 +48,7 @@
     "enzyme-adapter-react-16": "1.15.5",
     "enzyme-to-json": "3.4.0",
     "fetch-mock": "9.10.7",
-    "isomorphic-fetch": "2.2.1",
+    "isomorphic-fetch": "3.0.0",
     "prettier": "1.18.2",
     "prop-types": "15.7.2",
     "react-scripts": "3.4.3",
