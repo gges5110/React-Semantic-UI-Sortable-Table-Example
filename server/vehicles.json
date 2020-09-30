@@ -3789,7 +3789,7 @@
       "package": "XSE",
       "fuelType": "Diesel",
       "transmission": "Manual",
-      "favorite": false
+      "favorite": true
     },
     {
       "id": 380,
@@ -6349,7 +6349,7 @@
       "package": "SE",
       "fuelType": "Gas",
       "transmission": "Auto",
-      "favorite": false
+      "favorite": true
     },
     {
       "id": 636,
