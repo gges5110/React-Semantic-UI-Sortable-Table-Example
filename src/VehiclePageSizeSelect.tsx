@@ -31,7 +31,7 @@ export const VehiclePageSizeSelect: React.FC<VehiclePageSizeSelectProps> = ({
       <Dropdown
         inline={true}
         options={limitOptions}
-        defaultValue={limit}
+        defaultValue={String(limit)}
         onChange={handleChangeLimit}
       />
     </React.Fragment>

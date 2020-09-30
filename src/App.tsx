@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Container, Header, Icon, Menu } from "semantic-ui-react";
 import { VehicleList } from "./VehicleList";
+import "semantic-ui-css/semantic.min.css";
 
 export const App: React.FC = () => (
   <Container style={{ padding: "2em 0em" }}>

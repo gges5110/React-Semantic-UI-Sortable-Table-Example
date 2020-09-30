@@ -1,9 +1,9 @@
 import React from "react";
-import "isomorphic-fetch";
 import fetchMock from "fetch-mock";
 import { VehicleList } from "./VehicleList";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import "node-fetch";
 
 jest.mock("lodash.debounce", () => jest.fn(fn => fn));
 

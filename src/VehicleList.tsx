@@ -42,7 +42,10 @@ export const VehicleList: React.FC = () => {
     limit: 10
   });
   const [filter, setFilter] = useState<string>("");
-  const [sort, setSort] = useState<SortField>({ sortColumn: "id" });
+  const [sort, setSort] = useState<SortField>({
+    sortColumn: "id",
+    sortOrder: "ascending"
+  });
 
   const loadData = () => {
     setLoading(true);
