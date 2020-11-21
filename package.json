@@ -40,7 +40,7 @@
     "@types/react": "17.0.0",
     "@types/react-dom": "17.0.0",
     "coveralls": "3.1.0",
-    "fetch-mock": "9.10.7",
+    "fetch-mock": "9.11.0",
     "lodash.debounce": "4.0.8",
     "node-fetch": "2.6.1",
     "prettier": "2.2.0",
