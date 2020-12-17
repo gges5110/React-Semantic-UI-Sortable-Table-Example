@@ -4,8 +4,8 @@ import { Table, Pagination } from "semantic-ui-react";
 import { VehiclePageSizeSelect } from "./VehiclePageSizeSelect";
 import { VehicleTableHeader } from "./VehicleTableHeader";
 import { VehicleRow } from "./VehicleRow";
-import { Vehicle } from "./VehicleList";
 import { PaginationProps } from "semantic-ui-react/dist/commonjs/addons/Pagination/Pagination";
+import { Vehicle } from "../interfaces/vehicles";
 
 interface VehicleTableProps {
   vehicles: Vehicle[];
@@ -32,7 +32,7 @@ export const VehicleTable: React.FC<VehicleTableProps> = ({
   direction,
   handleSort,
   limit,
-  onChangePage
+  onChangePage,
 }) => {
   const vehicleRows = vehicles.map((vehicle, index) => (
     <VehicleRow key={index} vehicle={vehicle} addFavorite={addFavorite} />
