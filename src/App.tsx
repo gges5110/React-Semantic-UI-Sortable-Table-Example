@@ -1,7 +1,10 @@
 import React from "react";
 import { Button, Container, Header, Icon, Menu } from "semantic-ui-react";
-import { VehicleList } from "./VehicleList";
+import { VehicleList } from "./components/VehicleList";
 import "semantic-ui-css/semantic.min.css";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient();
 
 export const App: React.FC = () => (
   <Container style={{ padding: "2em 0em" }}>
@@ -31,6 +34,8 @@ export const App: React.FC = () => (
       </Menu.Item>
     </Menu>
 
-    <VehicleList />
+    <QueryClientProvider client={queryClient}>
+      <VehicleList />
+    </QueryClientProvider>
   </Container>
 );

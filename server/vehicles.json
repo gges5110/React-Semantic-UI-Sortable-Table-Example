@@ -38,7 +38,7 @@
       "package": "XSE",
       "fuelType": "Diesel",
       "transmission": "Auto",
-      "favorite": false
+      "favorite": true
     },
     {
       "id": 5,
@@ -48,7 +48,7 @@
       "package": "XSE",
       "fuelType": "Gas",
       "transmission": "Manual",
-      "favorite": false
+      "favorite": true
     },
     {
       "_id": 6,

@@ -1,7 +1,6 @@
 import React from "react";
 import { Button, Table } from "semantic-ui-react";
-// import PropTypes from "prop-types";
-import { Vehicle } from "./VehicleList";
+import { Vehicle } from "../interfaces/vehicles";
 
 interface VehicleRowProps {
   vehicle: Vehicle;
@@ -10,7 +9,7 @@ interface VehicleRowProps {
 
 export const VehicleRow: React.FC<VehicleRowProps> = ({
   vehicle,
-  addFavorite
+  addFavorite,
 }) => (
   <Table.Row>
     <Table.Cell>{vehicle.id}</Table.Cell>

@@ -4,8 +4,39 @@ import { VehicleList } from "./VehicleList";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import "node-fetch";
+import { mockBaseVehicles } from "../mockData/vehicles.mock";
 
-jest.mock("lodash.debounce", () => jest.fn(fn => fn));
+jest.mock("lodash.debounce", () => jest.fn((fn) => fn));
+jest.mock("../hooks/useVehicles", () => {
+  return {
+    useVehicles: jest.fn(() => ({
+      isLoading: false,
+      pagination: {
+        limit: 10,
+        page: 1,
+      },
+      setPagination: jest.fn(),
+      filter: "",
+      setFilter: jest.fn(),
+      sort: {
+        sortColumn: "id",
+      },
+      setSort: jest.fn(),
+      data: {
+        totalCount: mockBaseVehicles.length,
+        vehicles: mockBaseVehicles,
+      },
+    })),
+  };
+});
+
+jest.mock("../hooks/useAddFavorite", () => {
+  return {
+    useAddFavorite: jest.fn(() => ({
+      mutate: jest.fn(),
+    })),
+  };
+});
 
 describe("VehicleList", () => {
   beforeEach(() => {
@@ -18,8 +49,8 @@ describe("VehicleList", () => {
         package: "SE",
         fuelType: "Diesel",
         transmission: "Manual",
-        favorite: false
-      }
+        favorite: false,
+      },
     ]);
   });
 
@@ -38,11 +69,11 @@ describe("VehicleList", () => {
       {
         status: 404,
         body: {
-          message: "Some error message"
-        }
+          message: "Some error message",
+        },
       },
       {
-        overwriteRoutes: true
+        overwriteRoutes: true,
       }
     );
     render(<VehicleList />);
@@ -63,15 +94,15 @@ describe("VehicleList", () => {
           package: "SE",
           fuelType: "Diesel",
           transmission: "Manual",
-          favorite: false
-        }
+          favorite: false,
+        },
       ],
       {
         query: {
           _sort: "make",
-          _order: "asc"
+          _order: "asc",
         },
-        overwriteRoutes: false
+        overwriteRoutes: false,
       }
     );
     userEvent.click(screen.getByRole("columnheader", { name: "Make" }));
@@ -87,15 +118,15 @@ describe("VehicleList", () => {
           package: "SE",
           fuelType: "Diesel",
           transmission: "Manual",
-          favorite: false
-        }
+          favorite: false,
+        },
       ],
       {
         query: {
           _sort: "make",
-          _order: "desc"
+          _order: "desc",
         },
-        overwriteRoutes: false
+        overwriteRoutes: false,
       }
     );
     userEvent.click(screen.getByRole("columnheader", { name: "Make" }));
@@ -107,7 +138,7 @@ describe("VehicleList", () => {
     userEvent.click(screen.getByRole("listbox"));
 
     const options = await screen.findAllByRole("option");
-    const option = options.find(ele => ele.textContent === "25");
+    const option = options.find((ele) => ele.textContent === "25");
     expect(option).toBeDefined();
     if (option) {
       userEvent.click(option); // verify your onChange event
@@ -128,12 +159,12 @@ describe("VehicleList", () => {
       {
         status: 404,
         body: {
-          message: "Some error message"
-        }
+          message: "Some error message",
+        },
       },
       {
         method: "PUT",
-        overwriteRoutes: false
+        overwriteRoutes: false,
       }
     );
 
@@ -150,12 +181,12 @@ describe("VehicleList", () => {
           package: "SE",
           fuelType: "Diesel",
           transmission: "Manual",
-          favorite: false
-        }
+          favorite: false,
+        },
       ],
       {
         method: "PUT",
-        overwriteRoutes: true
+        overwriteRoutes: true,
       }
     );
 
