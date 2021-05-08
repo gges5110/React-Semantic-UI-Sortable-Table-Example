@@ -1,4 +1,4 @@
-FROM mhart/alpine-node:10 as base
+FROM mhart/alpine-node:16 as base
 WORKDIR /usr/src
 COPY package.json package-lock.json /usr/src/
 RUN npm ci --production
