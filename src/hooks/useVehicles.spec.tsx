@@ -1,5 +1,4 @@
 import { renderHook } from "@testing-library/react-hooks";
-import React from "react";
 import { useVehicles } from "./useVehicles";
 import fetchMock from "fetch-mock";
 import "node-fetch";
@@ -23,7 +22,8 @@ describe("useVehicles", () => {
       wrapper: reactQueryTestWrapper,
     });
 
-    expect(result.current.data).toEqual({ totalCount: 0, vehicles: [] });
+    expect(result.current.totalCount).toEqual(0);
+    expect(result.current.vehicles).toEqual([]);
   });
 
   it("fetch mock", async () => {
@@ -46,10 +46,8 @@ describe("useVehicles", () => {
     });
 
     await waitFor(() => {
-      expect(result.current.data).toEqual({
-        totalCount: 1,
-        vehicles: mockBaseVehicles,
-      });
+      expect(result.current.totalCount).toEqual(1);
+      expect(result.current.vehicles).toEqual(mockBaseVehicles);
     });
   });
 
@@ -75,15 +73,19 @@ describe("useVehicles", () => {
       wrapper: reactQueryTestWrapper,
     });
 
-    const { setFilter } = result.current;
-    setFilter("mazda");
+    const { onSubmitFilter } = result.current;
+    onSubmitFilter("mazda");
 
     await waitFor(() => {
-      expect(result.current.data).toEqual({
-        totalCount: 1,
-        vehicles: mockBaseVehicles,
-      });
+      expect(result.current.totalCount).toEqual(1);
+      expect(result.current.vehicles).toEqual(mockBaseVehicles);
     });
+
+    const { onSort, onChangeLimit, onChangePage } = result.current;
+    onSort("id");
+    onSort("make");
+    onChangeLimit(100);
+    onChangePage(3);
   });
 
   it("handles network failing case", async () => {
@@ -124,10 +126,8 @@ describe("useVehicles", () => {
     });
 
     await waitFor(() => {
-      expect(result.current.data).toEqual({
-        totalCount: 0,
-        vehicles: [],
-      });
+      expect(result.current.totalCount).toEqual(0);
+      expect(result.current.vehicles).toEqual([]);
     });
   });
 });

@@ -11,14 +11,14 @@
   "main": "server/server.js",
   "scripts": {
     "build": "react-scripts build",
-    "coverage": "CI=true react-scripts test --env=jest-environment-jsdom-fourteen --coverage",
+    "coverage": "CI=true react-scripts test --coverage",
     "coveralls": "npm run coverage && cat ./coverage/lcov.info | node node_modules/.bin/coveralls",
     "eject": "react-scripts eject",
     "now-build": "npm run build && mv build dist",
     "prettier": "prettier --single-quote --trailing-comma es5 --write \"src/**/*.{js,jsx}\"",
     "start": "react-scripts start",
     "start:server": "node server/server.js",
-    "test": "react-scripts test --env=jest-environment-jsdom-fourteen"
+    "test": "react-scripts test"
   },
   "browserslist": [
     ">0.2%",
@@ -40,22 +40,31 @@
     "@types/lodash.debounce": "4.0.6",
     "@types/react": "17.0.5",
     "@types/react-dom": "17.0.3",
+    "@types/react-router-dom": "^5.1.7",
     "coveralls": "3.1.0",
     "fetch-mock": "9.11.0",
     "lodash.debounce": "4.0.8",
     "node-fetch": "2.6.1",
     "prettier": "2.3.0",
+    "query-string": "^7.0.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-query": "3.16.0",
-    "react-scripts": "3.4.4",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "^4.0.3",
     "react-test-renderer": "17.0.2",
     "semantic-ui-css": "2.4.1",
     "semantic-ui-react": "2.0.3",
-    "typescript": "4.2.4"
+    "typescript": "4.2.4",
+    "use-query-params": "^1.2.2"
   },
   "engines": {
     "node": "12.x"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app"
+    ]
   },
   "proxy": "http://localhost:4000/"
 }

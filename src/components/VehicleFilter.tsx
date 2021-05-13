@@ -20,11 +20,12 @@ interface VehicleFilterState {
 export const VehicleFilter: React.FC<VehicleFilterProps> = ({
   totalCount,
   loading,
-  onSubmitFilter
+  onSubmitFilter,
+  filter,
 }) => {
   const [state, setState] = useState<VehicleFilterState>({
-    filter: "",
-    filterValid: true
+    filter: filter,
+    filterValid: true,
   });
 
   const f = debounce((value: string) => {

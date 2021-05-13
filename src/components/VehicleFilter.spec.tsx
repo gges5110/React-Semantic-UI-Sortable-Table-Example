@@ -1,9 +1,8 @@
-import React from "react";
 import { VehicleFilter } from "./VehicleFilter";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-jest.mock("lodash.debounce", () => jest.fn(fn => fn));
+jest.mock("lodash.debounce", () => (fn: any) => fn);
 
 describe("VehicleFilter", () => {
   it("renders", () => {

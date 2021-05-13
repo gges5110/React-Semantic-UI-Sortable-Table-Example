@@ -14,9 +14,11 @@ export interface Vehicle {
   transmission: string;
 }
 
+export type SortOrder = "ascending" | "descending";
+
 export interface SortField {
   sortColumn: string;
-  sortOrder?: "descending" | "ascending";
+  sortOrder?: SortOrder;
 }
 
 export interface QueryParam {
