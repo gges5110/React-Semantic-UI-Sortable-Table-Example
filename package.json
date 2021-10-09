@@ -28,7 +28,7 @@
   ],
   "dependencies": {
     "express": "^4.17.1",
-    "json-server": "^0.16.0"
+    "json-server": "^0.17.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "5.14.1",
